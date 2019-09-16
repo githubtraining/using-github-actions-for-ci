@@ -14,7 +14,8 @@ before:
 
 # Repository artifacts
 # 1. Issue: There's a bug!
-# 2. Pull request: CI for Node
+# 2. PR: CI for Node
+# 3. PR: Use Jest
 
 steps:
 
@@ -73,8 +74,22 @@ steps:
       - type: createReview
         event: APPROVE
         body: wait-for-first-test.md
+
+# Step 4
 # 1. Learner merges PR, but bug issue is still open.
 # 1. Bot opens PR with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
+  - title: Share the workflow with the team
+    description: Merge the PR containing your first workflow so the entire team can use it.
+    event: pull_request.closed
+    link: '{{ repoUrl }}/pull/2'
+    actions:
+      - type: gate
+        left: '%payload.pull_request.merged%'
+      - type: createPullRequest
+        title: Use Jest
+        body: pr-jest.md
+        head: use-jest
+
 # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
 # 1. Bot validates learner's work, asks them to approve.
 # 1. Learner approves PR.
