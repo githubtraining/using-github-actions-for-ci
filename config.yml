@@ -14,7 +14,7 @@ before:
 
 # Repository artifacts
 # 1. Issue: There's a bug!
-# 2. Pull request: opened by learner with templated workflow
+# 2. Pull request: CI for Node
 
 steps:
 
@@ -47,6 +47,7 @@ steps:
             operator: ===
             right: github-actions
       - type: respond
+        issue: CI for Node
         with: template-workflow-ran.md
         
   # Step 3
