@@ -5,14 +5,61 @@ template:
   repo: set-up-continuous-integration-with-github-actions-template
   name: set-up-continuous-integration-with-github-actions
 before:
+# 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects master branch
+# 1. Bot opens a bug report explaining the app is broken, asks learner to figure out what's wrong by adding some testing. 
   - type: updateBranchProtection
   - type: createIssue
     title: There's a bug!
     body: bug.md
+
+
 steps:
-  - title: First step
-    description: The first step in your course
-    event: issues.assigned
-    link: '{{ repoUrl }}'
+  - title: Use a templated workflow
+    description: Create a pull request with a templated workflow.
+    event: pull_request.opened
+    link: '{{ repoUrl }}/pull/1'
+# 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/node.js.yml)
+# 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
     actions:
-      - type: closeIssue
+      - type: respond
+        with: explain-template.md
+
+# 1. GitHub sends us a workflow run.
+# 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
+# 1. Learner adds a `test` script to `package.json` to get the workflow to succeed, calling just `standard`.
+# 1. Bot approves PR, mentions that we don't yet know what's broken but we'll find it in a later step. Let's merge the PR
+# 1. Learner merges PR, but bug issue is still open.
+# 1. Bot opens PR with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
+# 1. Learner reviews log in the Actions tab, fixes the code as suggested.
+# 1. Bot validates learner's work, asks them to approve.
+# 1. Learner approves PR.
+# 1. Bot merges PR
+# 1. Bot opens issue with description of the team's workflow, would like learner to help automate some of the tasks the team goes through. The requested changes require: branch protections, review approvals, easy way to see when enough approvals has been achieved, matrix build, save build artifacts, dedicated test job. We'll tackle some of the changes to the existing workflow file first, open a PR to target different Node versions.
+# 1. Learner opens a PR changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
+# 1. Bot asks learner to add a build for Windows
+# 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
+# 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
+# 1. Learner creates a new job, moves `npm test` down to that job
+# 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
+# 1. Bot explains what happens to a job's artifacts, and that they need to be saved, asks learner to upload the artifacts in the build job
+# 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
+# 1. Bot asks learner to now download the artifacts in the test job
+# 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
+# 1. GitHub sends a successful `check_run`
+# 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
+# 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
+# 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
+# 1. Learner adds the `pull_request_review` event to the workflow file.
+# 1. Bot asks learner to add a job with their own title, explains what that does
+# 1. Learner adds a job
+# 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
+# 1. Learner commits the `runs-on` and chooses an environment
+# 1. Bot asks learner to create a step for approval automation, using the [`pullreminders/label-when-approved-action` action](https://github.com/pullreminders/label-when-approved-action)
+# 1. Bot removes branch protections
+# 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
+# 1. Learner sets branch protection and approves the PR
+# 1. Action runs and applies a label
+# 1. Bot checks that branch protections are in place, asks the learner to fix it if not. Learner may have to re-approve.
+# 1. Bot comments that this action can be used to automatically deploy changes.
+# 1. Bot merges PR.
+# 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
