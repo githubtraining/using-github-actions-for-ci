@@ -13,7 +13,8 @@ before:
     body: bug.md
 
 # Repository artifacts
-# 1. Pull request: opened by learner with templated workflow
+# 1. Issue: There's a bug!
+# 2. Pull request: opened by learner with templated workflow
 
 steps:
 
@@ -23,7 +24,7 @@ steps:
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow.
     event: pull_request.opened
-    link: '{{ repoUrl }}/pull/1'
+    link: '{{ repoUrl }}/issues/1'
     actions:
       - type: respond
         with: explain-template.md
@@ -34,7 +35,7 @@ steps:
   - title: Run a templated workflow
     description: Wait for GitHub to run the templated workflow and report back the results.
     event: check_run.completed
-    link: '{{ repoUrl }}/pull/1'
+    link: '{{ repoUrl }}/pull/2'
     actions:
       - type: respond
         with: template-workflow-ran.md
@@ -45,7 +46,7 @@ steps:
   - title: Add your first test
     description: Add your first test script for CI to pick up
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/1'
+    link: '{{ repoUrl }}/pull/2'
     actions:
       - type: createReview
         event: APPROVE
