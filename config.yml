@@ -31,7 +31,6 @@ steps:
   # Step 2
   # 1. GitHub sends us a workflow run.
   # 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
-
   - title: Run a templated workflow
     description: Wait for GitHub to run the templated workflow and report back the results.
     event: check_run.completed
@@ -40,8 +39,17 @@ steps:
       - type: respond
         with: template-workflow-ran.md
         
-# 1. Learner adds a `test` script to `package.json` to get the workflow to succeed, calling just `standard`.
-# 1. Bot approves PR, mentions that we don't yet know what's broken but we'll find it in a later step. Let's merge the PR
+  # Step 3
+  # 1. Learner adds a `test` script to `package.json` to get the workflow to succeed, calling just `standard`.
+  # 1. Bot approves PR, mentions that we don't yet know what's broken but we'll find it in a later step. Let's merge the PR
+  - title: Add your first test
+    description: Add your first test script for CI to pick up
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/1'
+    actions:
+      - type: createReview
+        event: APPROVE
+        body: wait-for-first-test.md
 # 1. Learner merges PR, but bug issue is still open.
 # 1. Bot opens PR with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
 # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
