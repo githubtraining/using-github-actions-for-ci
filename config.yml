@@ -88,7 +88,7 @@ steps:
       - type: createPullRequest
         title: Use Jest
         body: pr-jest.md
-        head: use-jest
+        head: add-jest
 
 # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
 # 1. Bot validates learner's work, asks them to approve.
