@@ -23,9 +23,26 @@ steps:
   # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow.
-    event: pull_request.opened
+    event: pull_request
     link: '{{ repoUrl }}/issues/1'
     actions:
+      - type: gate
+        gates:
+        - left: '%payload.action%'
+          operator: ===
+          right: opened
+        - left: '%payload.action%'
+          operator: ===
+          right: edited
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: CI for Node
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: CI for Node
       - type: respond
         with: explain-template.md
 
