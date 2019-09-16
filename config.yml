@@ -1,0 +1,17 @@
+title: Set up continuous integration with GitHub Actions
+tagline: A brand new course on Learning Lab
+description: Set up CI with GitHub Actions
+template:
+  repo: set-up-continuous-integration-with-github-actions-template
+  name: set-up-continuous-integration-with-github-actions
+before:
+  - type: createIssue
+    title: Welcome!
+    body: new-issue.md
+steps:
+  - title: First step
+    description: The first step in your course
+    event: issues.assigned
+    link: '{{ repoUrl }}'
+    actions:
+      - type: closeIssue
