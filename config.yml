@@ -5,9 +5,10 @@ template:
   repo: set-up-continuous-integration-with-github-actions-template
   name: set-up-continuous-integration-with-github-actions
 before:
+  - type: updateBranchProtection
   - type: createIssue
-    title: Welcome!
-    body: new-issue.md
+    title: There's a bug!
+    body: bug.md
 steps:
   - title: First step
     description: The first step in your course
