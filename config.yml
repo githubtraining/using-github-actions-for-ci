@@ -5,27 +5,41 @@ template:
   repo: set-up-continuous-integration-with-github-actions-template
   name: set-up-continuous-integration-with-github-actions
 before:
-# 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects master branch
-# 1. Bot opens a bug report explaining the app is broken, asks learner to figure out what's wrong by adding some testing. 
+  # 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects master branch
+  # 1. Bot opens a bug report explaining the app is broken, asks learner to figure out what's wrong by adding some testing. 
   - type: updateBranchProtection
   - type: createIssue
     title: There's a bug!
     body: bug.md
 
+# Repository artifacts
+# 1. Pull request: opened by learner with templated workflow
 
 steps:
+
+  # Step 1
+  # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/node.js.yml)
+  # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow.
     event: pull_request.opened
     link: '{{ repoUrl }}/pull/1'
-# 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/node.js.yml)
-# 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
     actions:
       - type: respond
         with: explain-template.md
 
-# 1. GitHub sends us a workflow run.
-# 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
+  # Step 2
+  # 1. GitHub sends us a workflow run.
+  # 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
+
+  - title: Run a templated workflow
+    description: Wait for GitHub to run the templated workflow and report back the results.
+    event: check_run.completed
+    link: '{{ repoUrl }}/pull/1'
+    actions:
+      - type: respond
+        with: template-workflow-ran.md
+        
 # 1. Learner adds a `test` script to `package.json` to get the workflow to succeed, calling just `standard`.
 # 1. Bot approves PR, mentions that we don't yet know what's broken but we'll find it in a later step. Let's merge the PR
 # 1. Learner merges PR, but bug issue is still open.
