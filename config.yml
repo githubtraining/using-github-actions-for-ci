@@ -167,8 +167,17 @@ steps:
       - type: respond
         with: add-windows.md
 
-# 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
-# 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
+  # Step 8
+  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
+  # 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
+  - title: Target a Windows environment
+    description: Edit your workflow file to build for Windows environments
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/3'
+    actions:
+      - type: respond
+        with: new-job.md
+
 # 1. Learner creates a new job, moves `npm test` down to that job
 # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
 # 1. Bot explains what happens to a job's artifacts, and that they need to be saved, asks learner to upload the artifacts in the build job
