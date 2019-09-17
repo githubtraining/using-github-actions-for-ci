@@ -15,6 +15,7 @@ before:
 # Repository artifacts
 # 1. Issue: There's a bug!
 # 2. PR: CI for Node
+# 3: PR: Add jest tests
 
 steps:
 
@@ -45,6 +46,12 @@ steps:
               title: CI for Node
       - type: respond
         with: explain-template.md
+      - type: createPullRequest
+        title: Add jest tests
+        body: merge-jest.md
+        base: '%payload.pull_request.head.ref%'
+        head: add-jest
+
 
   # Step 2
   # 1. GitHub sends us a workflow run.
@@ -70,9 +77,6 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/2'
     actions:
-      - type: mergeBranch
-        base: '%payload.pull_request.head.ref%'
-        head: add-jest
       - type: respond
         with: wait-for-first-test.md
 

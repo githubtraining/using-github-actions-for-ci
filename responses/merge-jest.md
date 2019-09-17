@@ -1,0 +1,1 @@
+This PR adds the Jest tests. Merge this PR when the bot asks you to. 
