@@ -116,9 +116,11 @@ steps:
         else:
           - type: respond
             with: e-failed-run.md
+            issue: CI for Node
       - type: createReview
         event: APPROVE
         body: merge.md
+        pullRequest: CI for Node
 
   # Step 6
   # 1. Learner merges PR
