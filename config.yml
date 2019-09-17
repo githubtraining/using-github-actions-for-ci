@@ -15,7 +15,6 @@ before:
 # Repository artifacts
 # 1. Issue: There's a bug!
 # 2. PR: CI for Node
-# 3. PR: Use Jest
 
 steps:
 
@@ -64,37 +63,82 @@ steps:
         with: template-workflow-ran.md
         
   # Step 3
-  # 1. Learner adds a `test` script to `package.json` to get the workflow to succeed, calling just `standard`.
-  # 1. Bot approves PR, mentions that we don't yet know what's broken but we'll find it in a later step. Let's merge the PR
+  # 1. Learner adds a `test` script to `package.json`. Workflow still fails because the tests themselves are missing.
+  # 1. Bot commits changes with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
   - title: Add your first test
     description: Add your first test script for CI to pick up
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/2'
     actions:
+      - type: mergeBranch
+        base: '%payload.pull_request.head.ref%'
+        head: add-jest
+      - type: respond
+        with: wait-for-first-test.md
+
+  # Step 4
+  # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
+  # 1. Bot validates learner's work
+  # 1. Bot asks learner to fix the test
+  - title: Read an Actions log
+    description: Tell the bot which test is failing so we can fix it
+    event: issue_comment.created
+    link: '{{ repoUrl }}/pull/2'
+    actions:
+      - type: gate
+        left: '%payload.comment.body%'
+        operator: test
+        right: 'Initializes with two players'
+        else:
+          - type: respond
+            with: e-test-name.md
+            data:
+              expected: Initializes with two players
+      - type: respond
+        with: fix-test.md
+
+  # Step 5
+  # 1. Learner fixes the code that broke the build
+  # 1. Bot approves PR. Let's merge the PR
+  - title: Fix the test
+    description: Edit the file that's causing the test to fail
+    event: check_suite.completed
+    link: '{{ repoUrl }}/pull/2'
+    actions:
+      - type: gate
+        left: '%payload.check_suite.app.slug%'
+        operator: ===
+        right: github-actions
+      - type: gate
+        left: '%payload.check_suite.conclusion%'
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: e-failed-run.md
       - type: createReview
         event: APPROVE
-        body: wait-for-first-test.md
+        body: merge.md
 
-# Step 4
-# 1. Learner merges PR, but bug issue is still open.
-# 1. Bot opens PR with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
+  # Step 6
+  # 1. Learner merges PR
+  # 1. Bot opens issue with description of the team's workflow, would like learner to help automate some of the tasks the team goes through. The requested changes require: branch protections, review approvals, easy way to see when enough approvals has been achieved, matrix build, save build artifacts, dedicated test job. We'll tackle some of the changes to the existing workflow file first, open a PR to target different Node versions.
   - title: Share the workflow with the team
     description: Merge the PR containing your first workflow so the entire team can use it.
     event: pull_request.closed
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: gate
-        left: '%payload.pull_request.merged%'
-      - type: createPullRequest
-        title: Use Jest
-        body: pr-jest.md
-        head: add-jest
+        every: true
+        gates:
+          - left: '%payload.pull_request.merged%'
+          - left: '%payload.pull_request.title%'
+            operator: ===
+            right: CI for Node
+      - type: createIssue
+        title: A custom workflow
+        body: custom-workflow.md
 
-# 1. Learner reviews log in the Actions tab, fixes the code as suggested.
-# 1. Bot validates learner's work, asks them to approve.
-# 1. Learner approves PR.
-# 1. Bot merges PR
-# 1. Bot opens issue with description of the team's workflow, would like learner to help automate some of the tasks the team goes through. The requested changes require: branch protections, review approvals, easy way to see when enough approvals has been achieved, matrix build, save build artifacts, dedicated test job. We'll tackle some of the changes to the existing workflow file first, open a PR to target different Node versions.
 # 1. Learner opens a PR changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
 # 1. Bot asks learner to add a build for Windows
 # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)

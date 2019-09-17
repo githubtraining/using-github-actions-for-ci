@@ -1,5 +1,3 @@
-Great! Let's wait for the first test to run. I won't respond to that result, but you should let it run. 
+Great! Let's wait for the first test to run. Wait for Actions to respond with the results.
 
-Wait for Actions to respond with the results.
-
-When you're ready, merge this pull request. 
+When it finishes, enter the name of the test that failed. 
