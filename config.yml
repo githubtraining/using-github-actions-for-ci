@@ -139,8 +139,34 @@ steps:
         title: A custom workflow
         body: custom-workflow.md
 
-# 1. Learner opens a PR changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
-# 1. Bot asks learner to add a build for Windows
+  # Step 7
+  # 1. Learner opens a PR changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
+  # 1. Bot asks learner to add a build for Windows
+  - title: Create a custom GitHub Actions workflow
+    description: Open a pull request editing the existing workflow with new build targets
+    event: pull_request
+    link: '{{ repoUrl }}/pull/3'
+    actions:
+      - type: gate
+        gates:
+        - left: '%payload.action%'
+          operator: ===
+          right: opened
+        - left: '%payload.action%'
+          operator: ===
+          right: edited
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Support a custom workflow
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: Support a custom workflow
+      - type: respond
+        with: add-windows.md
+
 # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
 # 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
 # 1. Learner creates a new job, moves `npm test` down to that job
