@@ -191,6 +191,16 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/3'
     actions:
+      - type: findInTree
+        path: .github/workflows/nodejs.yml
+        action_id: nodeAction
+      - type: gate
+        left: '%actions.nodeAction%'
+        else:
+          - type: respond
+            with: e-missing-file.md
+            data:
+              expected: .github/workflows/nodejs.yaml
       - type: respond
         with: new-job.md
 
