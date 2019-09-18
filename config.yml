@@ -170,6 +170,16 @@ steps:
             with: e-rename-pr.md
             data:
               title: Support a custom workflow
+      - type: findInTree
+        path: .github/workflows/nodejs.yml
+        action_id: nodeAction
+      - type: gate
+        left: '%actions.nodeAction%'
+        else:
+          - type: respond
+            with: e-missing-file.md
+            data:
+              expected: .github/workflows/nodejs.yaml
       - type: respond
         with: add-windows.md
 
