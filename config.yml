@@ -206,6 +206,23 @@ steps:
 
 # Step 9
 # 1. Learner creates a new job, moves `npm test` down to that job
+- title: Use multiple jobs
+  description: Edit your workflow file to separate build and test jobs
+  event: pull_request.synchronize
+  linK: '{{ repoUrl }}/pull/3'
+  actions:
+    - type: findInTree
+      path: .github/workflows/nodejs.yml
+      action_id: nodeAction
+    - type: gate
+      left: '%actions.nodeAction%'
+      else:
+        - type: respond
+          with: e-missing-file.md
+          data:
+            expected: .github/workflows/nodejs.yaml
+    - type: respond
+      with: wait-for-test.md
 
 # Step 10
 # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
