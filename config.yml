@@ -272,10 +272,39 @@ steps:
 
 # Step 12
 # 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
+- title: Download a job's build artifacts
+  description: Use the download action in your workflow file to access a prior job's build artifacts
+  event: pull_request.synchronize
+  link: '{{ repoUrl }}/pull/3'
+  actions:
+    - type: findInTree
+      path: .github/workflows/nodejs.yml
+      action_id: nodeAction
+    - type: gate
+      left: '%actions.nodeAction%'
+      else:
+        - type: respond
+          with: e-missing-file.md
+          data:
+            expected: .github/workflows/nodejs.yaml
+    - type: createReview
+      event: APPROVE
+      body: merge.md
 
 # Step 13
 # 1. GitHub sends a successful `check_run`
 # 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
+- title: Share your completed CI workflow with the world
+  description: Merge the completed CI workflow
+  event: pull_request.closed
+  actions:
+    - type: gate
+      every: true
+      gates:
+        - left: '%payload.pull_request.merged%'
+        - left: '%payload.pull_request.title%'
+          operator: ===
+          right: Add jest tests
 
 # Step 14
 # 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
