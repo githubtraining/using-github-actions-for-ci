@@ -209,7 +209,7 @@ steps:
 - title: Use multiple jobs
   description: Edit your workflow file to separate build and test jobs
   event: pull_request.synchronize
-  linK: '{{ repoUrl }}/pull/3'
+  link: '{{ repoUrl }}/pull/3'
   actions:
     - type: findInTree
       path: .github/workflows/nodejs.yml
@@ -227,10 +227,48 @@ steps:
 # Step 10
 # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
 # 1. Bot explains what happens to a job's artifacts, and that they need to be saved, asks learner to upload the artifacts in the build job
+- title: Run multiple jobs
+  description: Wait for the result of multiple jobs in your workflow
+  event: check_suite.completed
+  link: '{{ repoUrl }}/pull/3'
+  actions:
+    - type: gate
+      left: '%payload.check_suite.app.slug%'
+      operator: ===
+      right: github-actions
+    - type: gate
+      left: '%payload.check_suite.conclusion%'
+      operator: ===
+      right: success
+      else:
+        - type: respond
+          with: e-failed-run.md
+          issue: Add jest tests
+    - type: respond
+      issue: Add jest tests
+      with: use-upload.md
 
 # Step 11
 # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
 # 1. Bot asks learner to now download the artifacts in the test job
+- title: Upload a job's build artifacts
+  description: Use the upload action in your workflow file to save a job's build artifacts
+  event: pull_request.synchronize
+  link: '{{ repoUrl }}/pull/3'
+  actions:
+    - type: findInTree
+      path: .github/workflows/nodejs.yml
+      action_id: nodeAction
+    - type: gate
+      left: '%actions.nodeAction%'
+      else:
+        - type: respond
+          with: e-missing-file.md
+          data:
+            expected: .github/workflows/nodejs.yaml
+    - type: respond
+      with: use-download.md
+
 
 # Step 12
 # 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
