@@ -343,14 +343,38 @@ steps:
           with: e-rename-pr.md
           data:
             title: Support the team's workflow
+    - type: respond
+      with: choose-event.md
 
 # Step 15
 # 1. Learner adds the `pull_request_review` event to the workflow file.
 # 1. Bot asks learner to add a job with their own title, explains what that does
+- title: Use an action to automate pull request reviews
+  description: Use the community action in your new workflow
+  link: '{{ repoUrl }}/pull/5'
+  event: pull_request.synchronize
+  actions:
+    - type: gate
+      left: '%payload.pull_request.title%'
+      operator: ===
+      right: Support the team's workflow
+    - type: respond
+      with: add-job.md
 
 # Step 16
 # 1. Learner adds a job
 # 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
+- title: Create an approval job in your new workflow
+  description: In your new workflow file, create a new job that'll use the community action
+  link: '{{ repoUrl }}/pull/5'
+  event: pull_request.synchronize
+  actions:
+    - type: gate
+      left: '%payload.pull_request.title%'
+      operator: ===
+      right: Support the team's workflow
+    - type: respond
+      with: add-step.md
 
 # Step 17
 # 1. Learner commits the `runs-on` and chooses an environment
