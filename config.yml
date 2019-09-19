@@ -15,7 +15,9 @@ before:
 # Repository artifacts
 # 1. Issue: There's a bug!
 # 2. PR: CI for Node
-# 3: PR: Add jest tests
+# 3. Issue: Set up a custom workflow
+# 4. PR: Add jest tests
+# 5. PR: Support the team's workflow
 
 steps:
 
@@ -151,7 +153,7 @@ steps:
   - title: Create a custom GitHub Actions workflow
     description: Open a pull request editing the existing workflow with new build targets
     event: pull_request
-    link: '{{ repoUrl }}/pull/3'
+    link: '{{ repoUrl }}/pull/4'
     actions:
       - type: gate
         gates:
@@ -189,7 +191,7 @@ steps:
   - title: Target a Windows environment
     description: Edit your workflow file to build for Windows environments
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/3'
+    link: '{{ repoUrl }}/pull/4'
     actions:
       - type: findInTree
         path: .github/workflows/nodejs.yml
@@ -209,7 +211,7 @@ steps:
 - title: Use multiple jobs
   description: Edit your workflow file to separate build and test jobs
   event: pull_request.synchronize
-  link: '{{ repoUrl }}/pull/3'
+  link: '{{ repoUrl }}/pull/4'
   actions:
     - type: findInTree
       path: .github/workflows/nodejs.yml
@@ -230,7 +232,7 @@ steps:
 - title: Run multiple jobs
   description: Wait for the result of multiple jobs in your workflow
   event: check_suite.completed
-  link: '{{ repoUrl }}/pull/3'
+  link: '{{ repoUrl }}/pull/4'
   actions:
     - type: gate
       left: '%payload.check_suite.app.slug%'
@@ -254,7 +256,7 @@ steps:
 - title: Upload a job's build artifacts
   description: Use the upload action in your workflow file to save a job's build artifacts
   event: pull_request.synchronize
-  link: '{{ repoUrl }}/pull/3'
+  link: '{{ repoUrl }}/pull/4'
   actions:
     - type: findInTree
       path: .github/workflows/nodejs.yml
@@ -275,7 +277,7 @@ steps:
 - title: Download a job's build artifacts
   description: Use the download action in your workflow file to access a prior job's build artifacts
   event: pull_request.synchronize
-  link: '{{ repoUrl }}/pull/3'
+  link: '{{ repoUrl }}/pull/4'
   actions:
     - type: findInTree
       path: .github/workflows/nodejs.yml
@@ -296,6 +298,7 @@ steps:
 # 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
 - title: Share your completed CI workflow with the world
   description: Merge the completed CI workflow
+  link: '{{ repoUrl }}/pull/4'
   event: pull_request.closed
   actions:
     - type: gate
@@ -305,10 +308,41 @@ steps:
         - left: '%payload.pull_request.title%'
           operator: ===
           right: Add jest tests
+    - type: respond
+      with: partial-workflow.md
+      issue: Set up a custom workflow
+      action_id: workflowUrl
+    - type: respond
+      with: go-to.md
+      data:
+        url: '%actions.workflowUrl.data.issue.html_url%'
+        name: original issue about the workflow
 
 # Step 14
 # 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
 # 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
+- title: Automate the review process
+  description: Open a pull request with a new workflow file to automate the team's review process
+  link: '{{ repoUrl }}/pull/5'
+  event: pull_request
+  actions:
+    - type: gate
+      gates:
+      - left: '%payload.action%'
+        operator: ===
+        right: opened
+      - left: '%payload.action%'
+        operator: ===
+        right: edited
+    - type: gate
+      left: '%payload.pull_request.title%'
+      operator: ===
+      right: Support the team's workflow
+      else:
+        - type: respond
+          with: e-rename-pr.md
+          data:
+            title: Support the team's workflow
 
 # Step 15
 # 1. Learner adds the `pull_request_review` event to the workflow file.
