@@ -194,190 +194,190 @@ steps:
       - type: respond
         with: new-job.md
 
-# Step 9
-# 1. Learner creates a new job, moves `npm test` down to that job
-- title: Use multiple jobs
-  description: Edit your workflow file to separate build and test jobs
-  event: pull_request.synchronize
-  link: '{{ repoUrl }}/pull/4'
-  actions:
-    - type: findInTree
-      path: .github/workflows/nodejs.yml
-      action_id: nodeAction
-    - type: gate
-      left: '%actions.nodeAction%'
-      else:
-        - type: respond
-          with: e-missing-file.md
-          data:
-            expected: .github/workflows/nodejs.yaml
-    - type: respond
-      with: wait-for-test.md
+  # Step 9
+  # 1. Learner creates a new job, moves `npm test` down to that job
+  - title: Use multiple jobs
+    description: Edit your workflow file to separate build and test jobs
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      - type: findInTree
+        path: .github/workflows/nodejs.yml
+        action_id: nodeAction
+      - type: gate
+        left: '%actions.nodeAction%'
+        else:
+          - type: respond
+            with: e-missing-file.md
+            data:
+              expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: wait-for-test.md
 
-# Step 10
-# 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
-# 1. Bot explains what happens to a job's artifacts, and that they need to be saved, asks learner to upload the artifacts in the build job
-- title: Run multiple jobs
-  description: Wait for the result of multiple jobs in your workflow
-  event: check_suite.completed
-  link: '{{ repoUrl }}/pull/4'
-  actions:
-    - type: gate
-      left: '%payload.check_suite.app.slug%'
-      operator: ===
-      right: github-actions
-    - type: gate
-      left: '%payload.check_suite.conclusion%'
-      operator: ===
-      right: success
-      else:
-        - type: respond
-          with: e-failed-run.md
-          issue: Add jest tests
-    - type: respond
-      issue: Add jest tests
-      with: use-upload.md
-
-# Step 11
-# 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
-# 1. Bot asks learner to now download the artifacts in the test job
-- title: Upload a job's build artifacts
-  description: Use the upload action in your workflow file to save a job's build artifacts
-  event: pull_request.synchronize
-  link: '{{ repoUrl }}/pull/4'
-  actions:
-    - type: findInTree
-      path: .github/workflows/nodejs.yml
-      action_id: nodeAction
-    - type: gate
-      left: '%actions.nodeAction%'
-      else:
-        - type: respond
-          with: e-missing-file.md
-          data:
-            expected: .github/workflows/nodejs.yaml
-    - type: respond
-      with: use-download.md
-
-
-# Step 12
-# 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
-- title: Download a job's build artifacts
-  description: Use the download action in your workflow file to access a prior job's build artifacts
-  event: pull_request.synchronize
-  link: '{{ repoUrl }}/pull/4'
-  actions:
-    - type: findInTree
-      path: .github/workflows/nodejs.yml
-      action_id: nodeAction
-    - type: gate
-      left: '%actions.nodeAction%'
-      else:
-        - type: respond
-          with: e-missing-file.md
-          data:
-            expected: .github/workflows/nodejs.yaml
-    - type: respond
-      with: partial-workflow.md
-      issue: Set up a custom workflow
-
-# Step 13
-# 1. GitHub sends a successful `check_run`
-# 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
-# 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
-# 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
-- title: Automate the review process
-  description: Add a new workflow file to automate the team's review process
-  link: '{{ repoUrl }}/pull/5'
-  event: pull_request.synchronize
-  actions:
-    - type: gate
-      left: '%payload.pull_request.title%'
-      operator: ===
-      right: A custom workflow
-    - type: respond
-      with: choose-event.md
-
-# Step 14
-# 1. Learner adds the `pull_request_review` event to the workflow file.
-# 1. Bot asks learner to add a job with their own title, explains what that does
-- title: Use an action to automate pull request reviews
-  description: Use the community action in your new workflow
-  link: '{{ repoUrl }}/pull/5'
-  event: pull_request.synchronize
-  actions:
-    - type: gate
-      left: '%payload.pull_request.title%'
-      operator: ===
-      right: A custom workflow
-    - type: respond
-      with: add-job.md
-
-# Step 15
-# 1. Learner adds a job
-# 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
-- title: Create an approval job in your new workflow
-  description: In your new workflow file, create a new job that'll use the community action
-  link: '{{ repoUrl }}/pull/5'
-  event: pull_request.synchronize
-  actions:
-    - type: gate
-      left: '%payload.pull_request.title%'
-      operator: ===
-      right: A custom workflow
-    - type: respond
-      with: add-step.md
-
-# Step 16
-# 1. Learner commits the `runs-on` and chooses an environment
-# 1. Bot asks learner to create a step for approval automation, using the [`pullreminders/label-when-approved-action` action](https://github.com/pullreminders/label-when-approved-action)
-# 1. Bot removes branch protections
-# 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
-- title: Automate approvals
-  description: Use the community action to automate part of the review approval process
-  link: '{{ repoUrl }}/pull/5'
-  event: pull_request.synchronize
-  actions:
-    - type: gate
-      left: '%payload.pull_request.title%'
-      operator: ===
-      right: A custom workflow
-    - type: removeBranchProtection
-    - type: respond
-      with: protect-master.md
-
-# Step 18
-# 1. Learner sets branch protection and approves the PR
-# 1. Action runs and applies a label
-# 1. Bot checks that branch protections are in place, asks the learner to fix it if not. Learner may have to re-approve.
-# 1. Bot comments that this action can be used to automatically deploy changes.
-# 1. Bot merges PR.
-# 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
-- title: Use branch protections
-  description: Complete the automated review process by protecting the master branch
-  link: '{{ repoUrl }}/pull/6'
-  event: pull_request_review.submitted
-  actions:
-    - type: gate
-      every: true
-      gates:
-      - left: '%payload.review.state%'
+  # Step 10
+  # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
+  # 1. Bot explains what happens to a job's artifacts, and that they need to be saved, asks learner to upload the artifacts in the build job
+  - title: Run multiple jobs
+    description: Wait for the result of multiple jobs in your workflow
+    event: check_suite.completed
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      - type: gate
+        left: '%payload.check_suite.app.slug%'
         operator: ===
-        right: APPROVED
-      - left: '%payload.pull_request.title%'
+        right: github-actions
+      - type: gate
+        left: '%payload.check_suite.conclusion%'
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: e-failed-run.md
+            issue: Add jest tests
+      - type: respond
+        issue: Add jest tests
+        with: use-upload.md
+
+  # Step 11
+  # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
+  # 1. Bot asks learner to now download the artifacts in the test job
+  - title: Upload a job's build artifacts
+    description: Use the upload action in your workflow file to save a job's build artifacts
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      - type: findInTree
+        path: .github/workflows/nodejs.yml
+        action_id: nodeAction
+      - type: gate
+        left: '%actions.nodeAction%'
+        else:
+          - type: respond
+            with: e-missing-file.md
+            data:
+              expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: use-download.md
+
+
+  # Step 12
+  # 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
+  - title: Download a job's build artifacts
+    description: Use the download action in your workflow file to access a prior job's build artifacts
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      - type: findInTree
+        path: .github/workflows/nodejs.yml
+        action_id: nodeAction
+      - type: gate
+        left: '%actions.nodeAction%'
+        else:
+          - type: respond
+            with: e-missing-file.md
+            data:
+              expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: partial-workflow.md
+        issue: Set up a custom workflow
+
+  # Step 13
+  # 1. GitHub sends a successful `check_run`
+  # 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
+  # 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
+  # 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
+  - title: Automate the review process
+    description: Add a new workflow file to automate the team's review process
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
         operator: ===
         right: A custom workflow
-    - type: octokit
-      method: repos.getBranchProtection
-      owner: '%payload.repository.owner.login%'
-      repo: '%payload.repository.name%'
-      branch: master
-      action_id: branchProtection
-      # TODO check if we can count on this
-    - type: gate
-      left: '%actions.branchProtection.data%'
-      else:
       - type: respond
-        with: e-protect.md
-        data:
-          response: '%actions.branchProtection%'
+        with: choose-event.md
+
+  # Step 14
+  # 1. Learner adds the `pull_request_review` event to the workflow file.
+  # 1. Bot asks learner to add a job with their own title, explains what that does
+  - title: Use an action to automate pull request reviews
+    description: Use the community action in your new workflow
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      - type: respond
+        with: add-job.md
+
+  # Step 15
+  # 1. Learner adds a job
+  # 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
+  - title: Create an approval job in your new workflow
+    description: In your new workflow file, create a new job that'll use the community action
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      - type: respond
+        with: add-step.md
+
+  # Step 16
+  # 1. Learner commits the `runs-on` and chooses an environment
+  # 1. Bot asks learner to create a step for approval automation, using the [`pullreminders/label-when-approved-action` action](https://github.com/pullreminders/label-when-approved-action)
+  # 1. Bot removes branch protections
+  # 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
+  - title: Automate approvals
+    description: Use the community action to automate part of the review approval process
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      - type: removeBranchProtection
+      - type: respond
+        with: protect-master.md
+
+  # Step 18
+  # 1. Learner sets branch protection and approves the PR
+  # 1. Action runs and applies a label
+  # 1. Bot checks that branch protections are in place, asks the learner to fix it if not. Learner may have to re-approve.
+  # 1. Bot comments that this action can be used to automatically deploy changes.
+  # 1. Bot merges PR.
+  # 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
+  - title: Use branch protections
+    description: Complete the automated review process by protecting the master branch
+    link: '{{ repoUrl }}/pull/6'
+    event: pull_request_review.submitted
+    actions:
+      - type: gate
+        every: true
+        gates:
+        - left: '%payload.review.state%'
+          operator: ===
+          right: APPROVED
+        - left: '%payload.pull_request.title%'
+          operator: ===
+          right: A custom workflow
+      - type: octokit
+        method: repos.getBranchProtection
+        owner: '%payload.repository.owner.login%'
+        repo: '%payload.repository.name%'
+        branch: master
+        action_id: branchProtection
+        # TODO check if we can count on this
+      - type: gate
+        left: '%actions.branchProtection.data%'
+        else:
+        - type: respond
+          with: e-protect.md
+          data:
+            response: '%actions.branchProtection%'
