@@ -58,7 +58,6 @@ steps:
         base: '%payload.pull_request.head.ref%'
         head: add-jest
 
-
   # Step 2
   # 1. GitHub sends us a workflow run.
   # 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
@@ -71,9 +70,14 @@ steps:
         left: '%payload.check_suite.app.slug%'
         operator: ===
         right: github-actions
+      - type: getPullRequest
+        pullRequest: Add jest tests
+        actions_id: jestPr
       - type: respond
         issue: CI for Node
         with: template-workflow-ran.md
+        data:
+          url: '%actions.jestPr.data.html_url%'
         
   # Step 3
   # 1. Learner adds a `test` script to `package.json`. Workflow still fails because the tests themselves are missing.
