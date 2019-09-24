@@ -375,6 +375,7 @@ steps:
           operator: ===
           right: A custom workflow
       - type: octokit
+        required: false
         method: repos.getBranchProtection
         owner: '%payload.repository.owner.login%'
         repo: '%payload.repository.name%'
