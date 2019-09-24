@@ -8,6 +8,6 @@ We need:
 - [ ] save build artifacts
 - [ ] dedicated test job
 
-We'll tackle some of the changes to the existing workflow file first. Please open a PR titled **Support a custom workflow** editing your existing workflow file. In that file, target versions `8.x` and `10.x` of Node, only.
+We'll tackle some of the changes to the existing workflow file first. Please edit your existing workflow file. In that file, target versions `8.x` and `10.x` of Node, only.
 
-I'll respond when you open a new pull request. 
+I'll respond when you commit to this branch.

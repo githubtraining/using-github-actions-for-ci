@@ -157,7 +157,7 @@ steps:
   # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
   # 1. Bot asks learner to add a build for Windows
   - title: Create a custom GitHub Actions workflow
-    description: Open a pull request editing the existing workflow with new build targets
+    description: Edit the existing workflow with new build targets
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
@@ -386,3 +386,12 @@ steps:
           with: e-protect.md
           data:
             response: '%actions.branchProtection%'
+      - type: createIssue
+        title: Congratulations!
+        body: congratulations.md
+        action_id: finalIssue
+      - type: mergePullRequest
+      - type: respond
+        with: goto.md
+        data:
+          url: '%actions.finalIssue.data.html_url%'
