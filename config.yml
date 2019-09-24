@@ -109,12 +109,12 @@ steps:
             data:
               expected: Initializes with two players
       - type: getPullRequest
-        pullRequest: Add jest tests
-        action_id: jestPr
+        pullRequest: CI for Node
+        action_id: ciPr
       - type: respond
         with: fix-test.md
         data:
-          gameJSUrl: '%payload.repository.html_url%/edit/%actions.jestPr.data.head.ref%/src/game.js?pr=%payload.repository.full_name%/pull/%actions.jestPr.data.number%'
+          gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
           
   # Step 5
   # 1. Learner fixes the code that broke the build
