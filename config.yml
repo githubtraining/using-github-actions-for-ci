@@ -353,7 +353,7 @@ steps:
       - type: respond
         with: protect-master.md
 
-  # Step 18
+  # Step 17
   # 1. Learner sets branch protection and approves the PR
   # 1. Action runs and applies a label
   # 1. Bot checks that branch protections are in place, asks the learner to fix it if not. Learner may have to re-approve.
