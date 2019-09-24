@@ -287,7 +287,6 @@ steps:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: partial-workflow.md
-        issue: Set up a custom workflow
 
   # Step 13
   # 1. GitHub sends a successful `check_run`
