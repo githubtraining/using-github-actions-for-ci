@@ -17,7 +17,7 @@ before:
 # 2. PR: CI for Node (learner)
 # 3. PR: Add jest tests (bot)
 # 4. PR: A custom workflow (bot)
-# 5. PR: Support the team's workflow
+# 5. Issue: Congratulations
 
 steps:
 
@@ -241,9 +241,9 @@ steps:
         else:
           - type: respond
             with: e-failed-run.md
-            issue: Add jest tests
+            issue: A custom workflow
       - type: respond
-        issue: Add jest tests
+        issue: A custom workflow
         with: use-upload.md
 
   # Step 11
