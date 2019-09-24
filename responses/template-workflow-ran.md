@@ -1,9 +1,7 @@
 The template workflow ran! But it failed :(
 
-That's because the template is looking for a test script (`npm test`). Let's add one. Edit the `package.json` file and add a test script as follows:
+That's because the template workflow calls `npm test`. That command is using Jest, and looks for a `__test__` folder with unit tests inside. That doesn't exist on this branch.
 
-```json
-  "test": "standard"
-```
+Not to worry, I've got you covered! Navigate over to the open PR titled **Add Jest tests** and merge it into this branch. That'll get us the test files we need.
 
-I'll respond when I detect you've committed. 
+I'll respond when you merge the pull request into this branch. 

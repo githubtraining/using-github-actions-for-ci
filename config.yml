@@ -13,7 +13,11 @@ before:
     body: bug.md
 
 # Repository artifacts
-# 1. Pull request: opened by learner with templated workflow
+# 1. Issue: There's a bug!
+# 2. PR: CI for Node (learner)
+# 3. PR: Add jest tests (bot)
+# 4. PR: A custom workflow (bot)
+# 5. Issue: Congratulations
 
 steps:
 
@@ -22,58 +26,373 @@ steps:
   # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow.
-    event: pull_request.opened
-    link: '{{ repoUrl }}/pull/1'
+    event: pull_request
+    link: '{{ repoUrl }}/issues/1'
     actions:
+      - type: gate
+        gates:
+        - left: '%payload.action%'
+          operator: ===
+          right: opened
+        - left: '%payload.action%'
+          operator: ===
+          right: edited
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: CI for Node
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: CI for Node
       - type: respond
         with: explain-template.md
+      - type: createPullRequest
+        title: Add jest tests
+        body: merge-jest.md
+        base: '%payload.pull_request.head.ref%'
+        head: add-jest
+
 
   # Step 2
   # 1. GitHub sends us a workflow run.
   # 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
-
   - title: Run a templated workflow
     description: Wait for GitHub to run the templated workflow and report back the results.
-    event: check_run.completed
-    link: '{{ repoUrl }}/pull/1'
+    event: check_suite.completed
+    link: '{{ repoUrl }}/pull/2'
     actions:
+      - type: gate
+        left: '%payload.check_suite.app.slug%'
+        operator: ===
+        right: github-actions
       - type: respond
+        issue: CI for Node
         with: template-workflow-ran.md
         
-# 1. Learner adds a `test` script to `package.json` to get the workflow to succeed, calling just `standard`.
-# 1. Bot approves PR, mentions that we don't yet know what's broken but we'll find it in a later step. Let's merge the PR
-# 1. Learner merges PR, but bug issue is still open.
-# 1. Bot opens PR with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
-# 1. Learner reviews log in the Actions tab, fixes the code as suggested.
-# 1. Bot validates learner's work, asks them to approve.
-# 1. Learner approves PR.
-# 1. Bot merges PR
-# 1. Bot opens issue with description of the team's workflow, would like learner to help automate some of the tasks the team goes through. The requested changes require: branch protections, review approvals, easy way to see when enough approvals has been achieved, matrix build, save build artifacts, dedicated test job. We'll tackle some of the changes to the existing workflow file first, open a PR to target different Node versions.
-# 1. Learner opens a PR changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
-# 1. Bot asks learner to add a build for Windows
-# 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
-# 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
-# 1. Learner creates a new job, moves `npm test` down to that job
-# 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
-# 1. Bot explains what happens to a job's artifacts, and that they need to be saved, asks learner to upload the artifacts in the build job
-# 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
-# 1. Bot asks learner to now download the artifacts in the test job
-# 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
-# 1. GitHub sends a successful `check_run`
-# 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
-# 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
-# 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
-# 1. Learner adds the `pull_request_review` event to the workflow file.
-# 1. Bot asks learner to add a job with their own title, explains what that does
-# 1. Learner adds a job
-# 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
-# 1. Learner commits the `runs-on` and chooses an environment
-# 1. Bot asks learner to create a step for approval automation, using the [`pullreminders/label-when-approved-action` action](https://github.com/pullreminders/label-when-approved-action)
-# 1. Bot removes branch protections
-# 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
-# 1. Learner sets branch protection and approves the PR
-# 1. Action runs and applies a label
-# 1. Bot checks that branch protections are in place, asks the learner to fix it if not. Learner may have to re-approve.
-# 1. Bot comments that this action can be used to automatically deploy changes.
-# 1. Bot merges PR.
-# 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
+  # Step 3
+  # 1. Learner adds a `test` script to `package.json`. Workflow still fails because the tests themselves are missing.
+  # 1. Bot commits changes with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
+  - title: Add your first test
+    description: Add your first test script for CI to pick up
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/2'
+    actions:
+      - type: respond
+        with: wait-for-first-test.md
+
+  # Step 4
+  # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
+  # 1. Bot validates learner's work
+  # 1. Bot asks learner to fix the test
+  - title: Read an Actions log
+    description: Tell the bot which test is failing so we can fix it
+    event: issue_comment.created
+    link: '{{ repoUrl }}/pull/2'
+    actions:
+      - type: gate
+        left: '%payload.comment.body%'
+        operator: test
+        right: 'Initializes with two players'
+        else:
+          - type: respond
+            with: e-test-name.md
+            data:
+              expected: Initializes with two players
+      - type: respond
+        with: fix-test.md
+
+  # Step 5
+  # 1. Learner fixes the code that broke the build
+  # 1. Bot approves PR. Let's merge the PR
+  - title: Fix the test
+    description: Edit the file that's causing the test to fail
+    event: check_suite.completed
+    link: '{{ repoUrl }}/pull/2'
+    actions:
+      - type: gate
+        left: '%payload.check_suite.app.slug%'
+        operator: ===
+        right: github-actions
+      - type: gate
+        left: '%payload.check_suite.conclusion%'
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: e-failed-run.md
+            issue: CI for Node
+      - type: createReview
+        event: APPROVE
+        body: merge.md
+        pullRequest: CI for Node
+
+  # Step 6
+  # 1. Learner merges PR
+  # 1. Bot opens issue with description of the team's workflow, would like learner to help automate some of the tasks the team goes through. The requested changes require: branch protections, review approvals, easy way to see when enough approvals has been achieved, matrix build, save build artifacts, dedicated test job. We'll tackle some of the changes to the existing workflow file first, open a PR to target different Node versions.
+  - title: Share the workflow with the team
+    description: Merge the PR containing your first workflow so the entire team can use it.
+    event: pull_request.closed
+    link: '{{ repoUrl }}/pull/2'
+    actions:
+      - type: gate
+        every: true
+        gates:
+          - left: '%payload.pull_request.merged%'
+          - left: '%payload.pull_request.title%'
+            operator: ===
+            right: CI for Node
+      - type: mergeBranch
+        head: master
+        base: team-workflow
+      - type: createPullRequest
+        title: A custom workflow
+        body: custom-workflow.md
+        head: team-workflow
+        action_id: newPR
+      - type: respond
+        with: goto.md
+        data:
+          url: '%actions.newPR.data.html_url%'
+
+  # Step 7
+  # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
+  # 1. Bot asks learner to add a build for Windows
+  - title: Create a custom GitHub Actions workflow
+    description: Edit the existing workflow with new build targets
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: add-windows.md
+
+  # Step 8
+  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
+  # 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
+  - title: Target a Windows environment
+    description: Edit your workflow file to build for Windows environments
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: new-job.md
+
+  # Step 9
+  # 1. Learner creates a new job, moves `npm test` down to that job
+  - title: Use multiple jobs
+    description: Edit your workflow file to separate build and test jobs
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: wait-for-test.md
+
+  # Step 10
+  # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
+  # 1. Bot explains what happens to a job's artifacts, and that they need to be saved, asks learner to upload the artifacts in the build job
+  - title: Run multiple jobs
+    description: Wait for the result of multiple jobs in your workflow
+    event: check_suite.completed
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      - type: gate
+        left: '%payload.check_suite.app.slug%'
+        operator: ===
+        right: github-actions
+      - type: gate
+        left: '%payload.check_suite.conclusion%'
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: e-failed-run.md
+            issue: A custom workflow
+      - type: respond
+        issue: A custom workflow
+        with: use-upload.md
+
+  # Step 11
+  # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
+  # 1. Bot asks learner to now download the artifacts in the test job
+  - title: Upload a job's build artifacts
+    description: Use the upload action in your workflow file to save a job's build artifacts
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: use-download.md
+
+
+  # Step 12
+  # 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
+  - title: Download a job's build artifacts
+    description: Use the download action in your workflow file to access a prior job's build artifacts
+    event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
+    actions:
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: partial-workflow.md
+
+  # Step 13
+  # 1. GitHub sends a successful `check_run`
+  # 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
+  # 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
+  # 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
+  - title: Automate the review process
+    description: Add a new workflow file to automate the team's review process
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      - type: respond
+        with: choose-event.md
+
+  # Step 14
+  # 1. Learner adds the `pull_request_review` event to the workflow file.
+  # 1. Bot asks learner to add a job with their own title, explains what that does
+  - title: Use an action to automate pull request reviews
+    description: Use the community action in your new workflow
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      - type: respond
+        with: add-job.md
+
+  # Step 15
+  # 1. Learner adds a job
+  # 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
+  - title: Create an approval job in your new workflow
+    description: In your new workflow file, create a new job that'll use the community action
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      - type: respond
+        with: add-step.md
+
+  # Step 16
+  # 1. Learner commits the `runs-on` and chooses an environment
+  # 1. Bot asks learner to create a step for approval automation, using the [`pullreminders/label-when-approved-action` action](https://github.com/pullreminders/label-when-approved-action)
+  # 1. Bot removes branch protections
+  # 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
+  - title: Automate approvals
+    description: Use the community action to automate part of the review approval process
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: A custom workflow
+      - type: removeBranchProtection
+      - type: respond
+        with: protect-master.md
+
+  # Step 18
+  # 1. Learner sets branch protection and approves the PR
+  # 1. Action runs and applies a label
+  # 1. Bot checks that branch protections are in place, asks the learner to fix it if not. Learner may have to re-approve.
+  # 1. Bot comments that this action can be used to automatically deploy changes.
+  # 1. Bot merges PR.
+  # 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
+  - title: Use branch protections
+    description: Complete the automated review process by protecting the master branch
+    link: '{{ repoUrl }}/pull/6'
+    event: pull_request_review.submitted
+    actions:
+      - type: gate
+        every: true
+        gates:
+        - left: '%payload.review.state%'
+          operator: ===
+          right: approved
+        - left: '%payload.pull_request.title%'
+          operator: ===
+          right: A custom workflow
+      - type: octokit
+        method: repos.getBranch
+        owner: '%payload.repository.owner.login%'
+        repo: '%payload.repository.name%'
+        branch: master
+        action_id: branchProtection
+      - type: gate
+        left: '%actions.branchProtection.data.protected%'
+        else:
+        - type: respond
+          with: e-protect.md
+          data:
+            response: '%actions.branchProtection%'
+      - type: createIssue
+        title: Congratulations!
+        body: congratulations.md
+        action_id: finalIssue
+      - type: mergePullRequest
+      - type: respond
+        with: goto.md
+        data:
+          url: '%actions.finalIssue.data.html_url%'
