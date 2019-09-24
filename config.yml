@@ -160,6 +160,8 @@ steps:
         title: A workflow for the entire team
         body: custom-workflow.md
         action_id: newIssue
+        data:
+          workflowUrl: '%payload.repository.html_url%/edit/master/.github/workflows/nodejs.yml'
       - type: respond
         with: goto.md
         data:
