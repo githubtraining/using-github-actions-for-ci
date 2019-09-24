@@ -143,6 +143,9 @@ steps:
           - left: '%payload.pull_request.title%'
             operator: ===
             right: CI for Node
+      - type: mergeBranch
+        head: master
+        base: team-workflow
       - type: createPullRequest
         title: A custom workflow
         body: custom-workflow.md
