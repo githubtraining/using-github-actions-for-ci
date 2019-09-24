@@ -16,8 +16,10 @@ before:
 # 1. Issue: There's a bug!
 # 2. PR: CI for Node (learner)
 # 3. PR: Add jest tests (bot)
-# 4. PR: A custom workflow (bot)
-# 5. Issue: Congratulations
+# 4. Issue: A workflow for the entire team
+# 5. PR: Improve CI (learner)
+# 6. PR: A custom workflow (bot)
+# 7. Issue: Congratulations
 
 steps:
 
@@ -143,31 +145,40 @@ steps:
           - left: '%payload.pull_request.title%'
             operator: ===
             right: CI for Node
-      - type: mergeBranch
-        head: master
-        base: team-workflow
-      - type: createPullRequest
-        title: A custom workflow
+      - type: createIssue
+        title: A workflow for the entire team
         body: custom-workflow.md
-        head: team-workflow
-        action_id: newPR
+        action_id: newIssue
       - type: respond
         with: goto.md
         data:
-          url: '%actions.newPR.data.html_url%'
+          url: '%actions.newIssue.data.html_url%'
 
   # Step 7
   # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
   # 1. Bot asks learner to add a build for Windows
   - title: Create a custom GitHub Actions workflow
     description: Edit the existing workflow with new build targets
-    event: pull_request.synchronize
+    event: pull_request
     link: '{{ repoUrl }}/pull/4'
     actions:
       - type: gate
+        gates:
+        - left: '%payload.action%'
+          operator: ===
+          right: opened
+        - left: '%payload.action%'
+          operator: ===
+          right: edited
+      - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: A custom workflow
+        right: Improve CI
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: Improve CI
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
       #   action_id: nodeAction
@@ -241,9 +252,9 @@ steps:
         else:
           - type: respond
             with: e-failed-run.md
-            issue: A custom workflow
+            issue: Improve CI
       - type: respond
-        issue: A custom workflow
+        issue: Improve CI
         with: use-upload.md
 
   # Step 11
@@ -285,10 +296,37 @@ steps:
       #       with: e-missing-file.md
       #       data:
       #         expected: .github/workflows/nodejs.yaml
-      - type: respond
-        with: partial-workflow.md
+      - type: createReview
+        event: APPROVE
+        body: merge-improved-ci.md
 
   # Step 13
+  - title: Share the improved CI workflow with the team
+    description: Merge the PR with the improved workflow
+    link: '{{ repoUrl }}/pull/5'
+    event: pull_request.closed
+    actions:
+      - type: gate
+        every: true
+        gates:
+          - left: '%payload.pull_request.merged%'
+          - left: '%payload.pull_request.title%'
+            operator: ===
+            right: Improve CI
+      - type: mergeBranch
+        head: master
+        base: team-workflow
+      - type: createPullRequest
+        title: A custom workflow
+        body: partial-workflow.md
+        head: team-workflow
+        action_id: newPR
+      - type: respond
+        with: goto.md
+        data:
+          url: '%actions.newPR.data.html_url%'
+
+  # Step 14
   # 1. GitHub sends a successful `check_run`
   # 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
   # 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
@@ -305,7 +343,7 @@ steps:
       - type: respond
         with: choose-event.md
 
-  # Step 14
+  # Step 15
   # 1. Learner adds the `pull_request_review` event to the workflow file.
   # 1. Bot asks learner to add a job with their own title, explains what that does
   - title: Use an action to automate pull request reviews
@@ -320,7 +358,7 @@ steps:
       - type: respond
         with: add-job.md
 
-  # Step 15
+  # Step 16
   # 1. Learner adds a job
   # 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
   - title: Create an approval job in your new workflow
@@ -335,7 +373,7 @@ steps:
       - type: respond
         with: add-step.md
 
-  # Step 16
+  # Step 17
   # 1. Learner commits the `runs-on` and chooses an environment
   # 1. Bot asks learner to create a step for approval automation, using the [`pullreminders/label-when-approved-action` action](https://github.com/pullreminders/label-when-approved-action)
   # 1. Bot removes branch protections
@@ -353,7 +391,7 @@ steps:
       - type: respond
         with: protect-master.md
 
-  # Step 17
+  # Step 18
   # 1. Learner sets branch protection and approves the PR
   # 1. Action runs and applies a label
   # 1. Bot checks that branch protections are in place, asks the learner to fix it if not. Learner may have to re-approve.
