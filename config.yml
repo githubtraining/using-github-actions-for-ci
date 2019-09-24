@@ -14,9 +14,9 @@ before:
 
 # Repository artifacts
 # 1. Issue: There's a bug!
-# 2. PR: CI for Node
-# 3. PR: A custom workflow
-# 4. PR: Add jest tests
+# 2. PR: CI for Node (learner)
+# 3. PR: Add jest tests (bot)
+# 4. PR: A custom workflow (bot)
 # 5. PR: Support the team's workflow
 
 steps:
@@ -147,6 +147,11 @@ steps:
         title: A custom workflow
         body: custom-workflow.md
         head: team-workflow
+        action_id: newPR
+      - type: respond
+        with: goto.md
+        data:
+          url: '%actions.newPR.data.html_url%'
 
   # Step 7
   # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
