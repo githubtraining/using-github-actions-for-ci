@@ -370,7 +370,7 @@ steps:
         gates:
         - left: '%payload.review.state%'
           operator: ===
-          right: APPROVED
+          right: approved
         - left: '%payload.pull_request.title%'
           operator: ===
           right: A custom workflow
