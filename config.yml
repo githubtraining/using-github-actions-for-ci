@@ -168,16 +168,16 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: A custom workflow
-      - type: findInTree
-        path: .github/workflows/nodejs.yml
-        action_id: nodeAction
-      - type: gate
-        left: '%actions.nodeAction%'
-        else:
-          - type: respond
-            with: e-missing-file.md
-            data:
-              expected: .github/workflows/nodejs.yaml
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: add-windows.md
 
@@ -189,16 +189,16 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
-      - type: findInTree
-        path: .github/workflows/nodejs.yml
-        action_id: nodeAction
-      - type: gate
-        left: '%actions.nodeAction%'
-        else:
-          - type: respond
-            with: e-missing-file.md
-            data:
-              expected: .github/workflows/nodejs.yaml
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: new-job.md
 
@@ -209,16 +209,16 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
-      - type: findInTree
-        path: .github/workflows/nodejs.yml
-        action_id: nodeAction
-      - type: gate
-        left: '%actions.nodeAction%'
-        else:
-          - type: respond
-            with: e-missing-file.md
-            data:
-              expected: .github/workflows/nodejs.yaml
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: wait-for-test.md
 
@@ -254,16 +254,16 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
-      - type: findInTree
-        path: .github/workflows/nodejs.yml
-        action_id: nodeAction
-      - type: gate
-        left: '%actions.nodeAction%'
-        else:
-          - type: respond
-            with: e-missing-file.md
-            data:
-              expected: .github/workflows/nodejs.yaml
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: use-download.md
 
@@ -275,16 +275,16 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
-      - type: findInTree
-        path: .github/workflows/nodejs.yml
-        action_id: nodeAction
-      - type: gate
-        left: '%actions.nodeAction%'
-        else:
-          - type: respond
-            with: e-missing-file.md
-            data:
-              expected: .github/workflows/nodejs.yaml
+      # - type: findInTree
+      #   path: .github/workflows/nodejs.yml
+      #   action_id: nodeAction
+      # - type: gate
+      #   left: '%actions.nodeAction%'
+      #   else:
+      #     - type: respond
+      #       with: e-missing-file.md
+      #       data:
+      #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: partial-workflow.md
         issue: Set up a custom workflow
