@@ -334,6 +334,8 @@ steps:
         body: partial-workflow.md
         head: team-workflow
         action_id: newPR
+        data:
+          fileUrl: '%payload.repository.html_url%/new/%actions.newPr.data.head.ref%/?filename=.github/workflows/approval-workflow.yml'
       - type: respond
         with: goto.md
         data:

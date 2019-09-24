@@ -9,10 +9,10 @@ Remember our custom workflow? Here's where we are:
 
 The last three remaining items don't really belong in a code build and test pipeline. So let's do these in a separate workflow file. 
 
-1. Create a new file, `.github/workflows/approval-workflow.yaml`, on this branch
+1. Create a [new file]({{ fileUrl }}), `.github/workflows/approval-workflow.yml`, on this branch
 1. Enter a name for your workflow in the new file, something like:
     ```yaml
     name: Team awesome's approval workflow
     ```
 
-I'll respond when you make thsee changes.
+I'll respond when you make these changes.
