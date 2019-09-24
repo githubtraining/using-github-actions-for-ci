@@ -160,7 +160,7 @@ steps:
   - title: Create a custom GitHub Actions workflow
     description: Edit the existing workflow with new build targets
     event: pull_request
-    link: '{{ repoUrl }}/pull/4'
+    link: '{{ repoUrl }}/pull/5'
     actions:
       - type: gate
         gates:
@@ -198,7 +198,7 @@ steps:
   - title: Target a Windows environment
     description: Edit your workflow file to build for Windows environments
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/4'
+    link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -218,7 +218,7 @@ steps:
   - title: Use multiple jobs
     description: Edit your workflow file to separate build and test jobs
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/4'
+    link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -239,7 +239,7 @@ steps:
   - title: Run multiple jobs
     description: Wait for the result of multiple jobs in your workflow
     event: check_suite.completed
-    link: '{{ repoUrl }}/pull/4'
+    link: '{{ repoUrl }}/pull/5'
     actions:
       - type: gate
         left: '%payload.check_suite.app.slug%'
@@ -263,7 +263,7 @@ steps:
   - title: Upload a job's build artifacts
     description: Use the upload action in your workflow file to save a job's build artifacts
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/4'
+    link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -284,7 +284,7 @@ steps:
   - title: Download a job's build artifacts
     description: Use the download action in your workflow file to access a prior job's build artifacts
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/4'
+    link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -333,7 +333,7 @@ steps:
   # 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
   - title: Automate the review process
     description: Add a new workflow file to automate the team's review process
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ repoUrl }}/pull/6'
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -348,7 +348,7 @@ steps:
   # 1. Bot asks learner to add a job with their own title, explains what that does
   - title: Use an action to automate pull request reviews
     description: Use the community action in your new workflow
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ repoUrl }}/pull/6'
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -363,7 +363,7 @@ steps:
   # 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
   - title: Create an approval job in your new workflow
     description: In your new workflow file, create a new job that'll use the community action
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ repoUrl }}/pull/6'
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -380,7 +380,7 @@ steps:
   # 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
   - title: Automate approvals
     description: Use the community action to automate part of the review approval process
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ repoUrl }}/pull/6'
     event: pull_request.synchronize
     actions:
       - type: gate
