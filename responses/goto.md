@@ -1,1 +1,1 @@
-Let's go to the [next step](url).
+Let's go to the [next step]({{url}}).
