@@ -375,15 +375,13 @@ steps:
           operator: ===
           right: A custom workflow
       - type: octokit
-        required: false
-        method: repos.getBranchProtection
+        method: repos.getBranch
         owner: '%payload.repository.owner.login%'
         repo: '%payload.repository.name%'
         branch: master
         action_id: branchProtection
-        # TODO check if we can count on this
       - type: gate
-        left: '%actions.branchProtection.data%'
+        left: '%actions.branchProtection.data.protected%'
         else:
         - type: respond
           with: e-protect.md
