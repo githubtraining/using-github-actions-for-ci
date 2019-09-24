@@ -357,6 +357,9 @@ steps:
         right: A custom workflow
       - type: respond
         with: choose-event.md
+        data:
+          editUrl: '%payload.repository.html_url%/edit/%payload.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+
 
   # Step 15
   # 1. Learner adds the `pull_request_review` event to the workflow file.
@@ -372,6 +375,8 @@ steps:
         right: A custom workflow
       - type: respond
         with: add-job.md
+        data:
+          editUrl: '%payload.repository.html_url%/edit/%payload.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 16
   # 1. Learner adds a job
@@ -438,8 +443,6 @@ steps:
         else:
         - type: respond
           with: e-protect.md
-          data:
-            response: '%actions.branchProtection%'
       - type: createIssue
         title: Congratulations!
         body: congratulations.md
