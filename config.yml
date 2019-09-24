@@ -72,7 +72,7 @@ steps:
         right: github-actions
       - type: getPullRequest
         pullRequest: Add jest tests
-        actions_id: jestPr
+        action_id: jestPr
       - type: respond
         issue: CI for Node
         with: template-workflow-ran.md
@@ -110,7 +110,7 @@ steps:
               expected: Initializes with two players
       - type: getPullRequest
         pullRequest: Add jest tests
-        actions_id: jestPr
+        action_id: jestPr
       - type: respond
         with: fix-test.md
         data:
