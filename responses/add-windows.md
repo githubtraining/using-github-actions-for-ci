@@ -5,8 +5,6 @@ We'll be deploying our app to Windows environments. Let's add Windows to the mat
 Edit your NodeJS config so that we add Windows to the OS. Your build step should look like this:
 
 ```yaml
-  build:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [ubuntu-lastest, windows-2016]

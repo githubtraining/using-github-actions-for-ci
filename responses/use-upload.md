@@ -4,5 +4,16 @@ First, we'll need to save the artifacts created from `build`. Use [`actions/uplo
 
 I'll respond when you add the following line to your workflow file:
 ```yaml
-- uses: actions/upload-artifact@master
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: npm install and build webpack
+        run: |
+          npm install
+          npm run build
+      - uses: actions/upload-artifact@master
+        with:
+          name: webpack artifacts
+          path: public/
 ```

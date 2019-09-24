@@ -11,22 +11,14 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-lastest, windows-2016]
-        node-version: [8.x, 10.x]
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install
-      run: |
-        npm install
-      env:
-        CI: true
+      - uses: actions/checkout@v1
+      - name: npm install and build webpack
+        run: |
+          npm install
+          npm run build
   test:
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -38,8 +30,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm test
+    - name: npm install, and test
       run: |
+        npm install
         npm test
       env:
         CI: true
