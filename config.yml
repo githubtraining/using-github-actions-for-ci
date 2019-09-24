@@ -408,6 +408,7 @@ steps:
         operator: ===
         right: A custom workflow
       - type: removeBranchProtection
+      - type: requestReviewFromRegistrant
       - type: respond
         with: protect-master.md
 
