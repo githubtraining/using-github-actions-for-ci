@@ -407,6 +407,9 @@ steps:
         right: A custom workflow
       - type: respond
         with: add-step.md
+        data:
+          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+
 
   # Step 17
   # 1. Learner commits the `runs-on` and chooses an environment
@@ -426,6 +429,8 @@ steps:
       - type: requestReviewFromRegistrant
       - type: respond
         with: protect-master.md
+        data:
+          settingsUrl: '%payload.repository.html_url%/settings/branches'
 
   # Step 18
   # 1. Learner sets branch protection and approves the PR

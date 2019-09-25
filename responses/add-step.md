@@ -1,4 +1,4 @@
-Now that we've got our job created, let's add the step.
+Now that we've got our job created, let's add the step. Edit the [workflow file]{{ editUrl }} with the following.
 
 ```yaml
 on: pull_request_review
