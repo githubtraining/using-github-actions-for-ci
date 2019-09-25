@@ -116,7 +116,7 @@ steps:
       - type: respond
         with: fix-test.md
         data:
-          gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+          gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
           
   # Step 5
   # 1. Learner fixes the code that broke the build
@@ -207,7 +207,7 @@ steps:
       - type: respond
         with: add-windows.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 8
   # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
@@ -230,7 +230,7 @@ steps:
       - type: respond
         with: new-job.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 9
   # 1. Learner creates a new job, moves `npm test` down to that job
@@ -252,7 +252,7 @@ steps:
       - type: respond
         with: wait-for-test.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 10
   # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
@@ -281,7 +281,7 @@ steps:
         issue: Improve CI
         with: use-upload.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
 
   # Step 11
   # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
@@ -304,7 +304,7 @@ steps:
       - type: respond
         with: use-download.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
 
   # Step 12
@@ -373,7 +373,7 @@ steps:
       - type: respond
         with: choose-event.md
         data:
-          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
 
   # Step 15
@@ -391,7 +391,7 @@ steps:
       - type: respond
         with: add-job.md
         data:
-          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 16
   # 1. Learner adds a job
