@@ -301,6 +301,8 @@ steps:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: use-download.md
+        data:
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/?filename=.github/workflows/nodejs.yml'
 
 
   # Step 12
