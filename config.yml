@@ -52,6 +52,8 @@ steps:
               title: CI for Node
       - type: respond
         with: explain-template.md
+        data:
+          actionsUrl: '%payload.repository.html_url%/actions'
       - type: createPullRequest
         title: Add jest tests
         body: merge-jest.md
