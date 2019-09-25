@@ -227,6 +227,8 @@ steps:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: new-job.md
+        data:
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/?filename=.github/workflows/nodejs.yml'
 
   # Step 9
   # 1. Learner creates a new job, moves `npm test` down to that job
@@ -247,6 +249,8 @@ steps:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: wait-for-test.md
+        data:
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/?filename=.github/workflows/nodejs.yml'
 
   # Step 10
   # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
@@ -268,9 +272,14 @@ steps:
           - type: respond
             with: e-failed-run.md
             issue: Improve CI
+      - type: getPullRequest
+        pullRequest: Improve CI
+        action_id: ciPr
       - type: respond
         issue: Improve CI
         with: use-upload.md
+        data:
+          fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/?filename=.github/workflows/nodejs.yml'
 
   # Step 11
   # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
