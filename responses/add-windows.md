@@ -2,7 +2,7 @@ Great! Here, we'll explain a little about matrix builds and how we target specif
 
 We'll be deploying our app to Windows environments. Let's add Windows to the matrix build configs.
 
-Edit your NodeJS config so that we add Windows to the OS. Your build step should look like this:
+Edit your [NodeJS config]({{ fileUrl }}) so that we add Windows to the OS. Your build step should look like this:
 
 ```yaml
     strategy:

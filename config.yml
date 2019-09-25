@@ -204,6 +204,8 @@ steps:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
         with: add-windows.md
+        data:
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/?filename=.github/workflows/nodejs.yml'
 
   # Step 8
   # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
@@ -358,7 +360,7 @@ steps:
       - type: respond
         with: choose-event.md
         data:
-          editUrl: '%payload.repository.html_url%/edit/%payload.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
 
 
   # Step 15
@@ -376,7 +378,7 @@ steps:
       - type: respond
         with: add-job.md
         data:
-          editUrl: '%payload.repository.html_url%/edit/%payload.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
+          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 16
   # 1. Learner adds a job
