@@ -2,7 +2,7 @@ Awesome!
 
 Let's talk about jobs a little here.
 
-Let's add a new job so that we can separate the build and test steps. Commit a new job to your workflow file, call it "test".
+Let's add a new job so that we can separate the build and test steps. Commit a new job to [your workflow file]({{ fileUrl }}), call it "test".
 
 ```yaml
 name: Node CI

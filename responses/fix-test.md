@@ -1,6 +1,6 @@
 It's time to fix the code so our test passes.
 
-Replace 
+On this branch, edit [src/game.js]({{ gameJSUrl }})
 
 ```ts
   this.p2 = Bananas

@@ -1,4 +1,4 @@
-Let's add a job to your brand new workflow. 
+Let's add a job to your brand new [workflow]({{ editUrl }}). 
 
 ```yaml
 on: pull_request_review
