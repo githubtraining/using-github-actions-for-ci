@@ -304,7 +304,7 @@ steps:
       - type: respond
         with: use-download.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=%payload.repository.full_name%/pull/%payload.number%'
 
 
   # Step 12
