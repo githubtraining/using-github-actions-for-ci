@@ -63,7 +63,7 @@ steps:
         file: .github/workflows/nodejs.yml
         body: explain-job.md
       - type: createPullRequestComment
-        position: 15
+        position: 17
         file: .github/workflows/nodejs.yml
         body: explain-checkout.md
       - type: createPullRequest
