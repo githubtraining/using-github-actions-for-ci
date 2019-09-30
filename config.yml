@@ -127,9 +127,9 @@ steps:
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: gate
-        left: '%payload.comment.body%'
+        left: '/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gi'
         operator: test
-        right: '/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gi'
+        right: '%payload.comment.body%'
         required: false
         else:
           - type: respond
@@ -142,6 +142,7 @@ steps:
         data:
           gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
       - type: createPullRequestComment
+        pullRequest: CI for Node
         position: 5
         file: src/game.js
         body: fix-bananas.md
