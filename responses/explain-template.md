@@ -1,3 +1,3 @@
-Hi! I'm explaining the template workflow here!
+Great job adding the templated workflow. Simply adding that file to this branch is enough for GitHub Actions to begin running CI on your repository. This takes a couple of minutes, so let's take this opportunity to learn about some of the components of the workflow file you just added. We'll dive deeper into some of the key elements of this file in future steps of the course. 
 
-Now that we added a templated workflow, I'm waiting for GitHub to let us know it's done running the workflow. You can follow along in the [Actions tab]({{ actionsUrl }}), or by clicking Details on the pending status below. 
+I'll respond when GitHub Actions finishes running the workflow. You can follow along in the [Actions tab]({{ actionsUrl }}), or by clicking Details on the pending status below. 
