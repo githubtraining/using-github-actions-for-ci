@@ -50,10 +50,20 @@ steps:
             with: e-rename-pr.md
             data:
               title: CI for Node
-      - type: respond
-        with: explain-template.md
-        data:
-          actionsUrl: '%payload.repository.html_url%/actions'
+      - type: octokit
+        method: pulls.createReview
+        owner: '%payload.repository.owner.login%'
+        repo: '%payload.repository.name%'
+        pull_number: '%payload.number%'
+        body: test review
+        comments:
+          - path: .github/workflows/nodejs.yml
+            position: 1
+            body: test comment
+      # - type: respond
+      #   with: explain-template.md
+      #   data:
+      #     actionsUrl: '%payload.repository.html_url%/actions'
       - type: createPullRequest
         title: Add jest tests
         body: merge-jest.md
