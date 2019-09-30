@@ -66,6 +66,10 @@ steps:
         position: 17
         file: .github/workflows/nodejs.yml
         body: explain-checkout.md
+      - type: createPullRequestComment
+        position: 24
+        file: .github/workflows/nodejs.yml
+        body: explain-run.md
       - type: createPullRequest
         title: Add jest tests
         body: merge-jest.md
