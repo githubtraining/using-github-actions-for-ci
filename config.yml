@@ -56,19 +56,19 @@ steps:
           actionsUrl: '%payload.repository.html_url%/actions'
       - type: createPullRequestComment
         position: 3
-        file: .github/workflows/Node.js.yml
+        file: .github/workflows/nodejs.yml
         body: explain-on.md
       - type: createPullRequestComment
         position: 8
-        file: .github/workflows/Node.js.yml
+        file: .github/workflows/nodejs.yml
         body: explain-job.md
       - type: createPullRequestComment
         position: 17
-        file: .github/workflows/Node.js.yml
+        file: .github/workflows/nodejs.yml
         body: explain-checkout.md
       - type: createPullRequestComment
         position: 24
-        file: .github/workflows/Node.js.yml
+        file: .github/workflows/nodejs.yml
         body: explain-run.md
       - type: createPullRequest
         title: Add jest tests
