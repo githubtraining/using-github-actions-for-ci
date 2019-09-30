@@ -1,9 +1,11 @@
-A job is made up of steps, and this section of the workflow file starts defining the `build` job's steps.
+A job is made up of steps, and this section of the workflow, the template defines the steps that make up the `build` job.
 
-To properly run tests against our codebase, the virtual machine needs a copy of it. Therefore, the first step will be to use an action that performs a `git clone` of your repository within the virtual environment and performs a `git checkout` to a specified branch, commit, or tag. We do this by using an Action built by GitHub. Our template just points to the latest commit on the master branch.
-
+The power of GitHub Actions lies in access to actions written by the :sparkles: GitHub community. Here, we'll use two Actions officially written and supported by GitHub:
+- `actions/checkout@v1` is used to ensure our virtual machine has a copy of our codebase. The checked out code will be used to run tests against.
+- `actions/setup-node@v1` is used to set up proper versions of Node.js since we'll be performing testing against multiple versions.
 
 To learn more about the fields discussed here, see:
 - [Workflow syntax for GitHub Actions: `jobs.<job_id>.steps:`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idsteps) on GitHub Help 
 - [Referencing actions in your workflow](https://help.github.com/en/articles/configuring-a-workflow#referencing-actions-in-your-workflow) on GitHub Help
-- The [`actions/checkout`](https://github.com/actions/checkout) action
+- Source repository for the [`actions/checkout`](https://github.com/actions/checkout) action
+- Source repository for the [`actions/setup-node](https://github.com/actions/setup-node) action.

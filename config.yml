@@ -56,19 +56,19 @@ steps:
           actionsUrl: '%payload.repository.html_url%/actions'
       - type: createPullRequestComment
         position: 3
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/Node.js.yml
         body: explain-on.md
       - type: createPullRequestComment
         position: 8
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/Node.js.yml
         body: explain-job.md
       - type: createPullRequestComment
         position: 17
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/Node.js.yml
         body: explain-checkout.md
       - type: createPullRequestComment
         position: 24
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/Node.js.yml
         body: explain-run.md
       - type: createPullRequest
         title: Add jest tests
@@ -185,14 +185,14 @@ steps:
         body: custom-workflow.md
         action_id: newIssue
         data:
-          workflowUrl: '%payload.repository.html_url%/edit/master/.github/workflows/nodejs.yml'
+          workflowUrl: '%payload.repository.html_url%/edit/master/.github/workflows/Node.js.yml'
       - type: respond
         with: goto.md
         data:
           url: '%actions.newIssue.data.html_url%'
 
   # Step 7
-  # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
+  # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/Node.js.yml#L10).
   # 1. Bot asks learner to add a build for Windows
   - title: Create a custom GitHub Actions workflow
     description: Edit the existing workflow with new build targets
@@ -217,7 +217,7 @@ steps:
             data:
               title: Improve CI
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/Node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -225,14 +225,14 @@ steps:
       #     - type: respond
       #       with: e-missing-file.md
       #       data:
-      #         expected: .github/workflows/nodejs.yaml
+      #         expected: .github/workflows/Node.js.yaml
       - type: respond
         with: add-windows.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/Node.js.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 8
-  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
+  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/Node.js.yml#L9)
   # 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
   - title: Target a Windows environment
     description: Edit your workflow file to build for Windows environments
@@ -240,7 +240,7 @@ steps:
     link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/Node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -248,11 +248,11 @@ steps:
       #     - type: respond
       #       with: e-missing-file.md
       #       data:
-      #         expected: .github/workflows/nodejs.yaml
+      #         expected: .github/workflows/Node.js.yaml
       - type: respond
         with: new-job.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/Node.js.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 9
   # 1. Learner creates a new job, moves `npm test` down to that job
@@ -262,7 +262,7 @@ steps:
     link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/Node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -270,11 +270,11 @@ steps:
       #     - type: respond
       #       with: e-missing-file.md
       #       data:
-      #         expected: .github/workflows/nodejs.yaml
+      #         expected: .github/workflows/Node.js.yaml
       - type: respond
         with: wait-for-test.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/Node.js.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
   # Step 10
   # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
@@ -303,7 +303,7 @@ steps:
         issue: Improve CI
         with: use-upload.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/Node.js.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
 
   # Step 11
   # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
@@ -314,7 +314,7 @@ steps:
     link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/Node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -322,11 +322,11 @@ steps:
       #     - type: respond
       #       with: e-missing-file.md
       #       data:
-      #         expected: .github/workflows/nodejs.yaml
+      #         expected: .github/workflows/Node.js.yaml
       - type: respond
         with: use-download.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/Node.js.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
 
   # Step 12
@@ -337,7 +337,7 @@ steps:
     link: '{{ repoUrl }}/pull/5'
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/Node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -345,7 +345,7 @@ steps:
       #     - type: respond
       #       with: e-missing-file.md
       #       data:
-      #         expected: .github/workflows/nodejs.yaml
+      #         expected: .github/workflows/Node.js.yaml
       - type: createReview
         event: APPROVE
         body: merge-improved-ci.md
