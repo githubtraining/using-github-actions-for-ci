@@ -97,7 +97,7 @@ steps:
         with: template-workflow-ran.md
         data:
           url: '%actions.jestPr.data.html_url%'
-          actionsUrl: '%payload.repsitory.html_url%'/actions
+          actionsUrl: '%payload.repsitory.html_url%/actions'
         
   # Step 3
   # 1. Learner adds a `test` script to `package.json`. Workflow still fails because the tests themselves are missing.
