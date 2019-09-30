@@ -110,7 +110,7 @@ steps:
       - type: respond
         with: wait-for-first-test.md
         data:
-          actionsUrl: '%payload.repsitory.html_url%'/actions
+          actionsUrl: '%payload.repsitory.html_url%/actions'
       - type: respond
         with: goto.md
         issue: Add jest tests
