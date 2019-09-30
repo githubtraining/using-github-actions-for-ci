@@ -1,1 +1,3 @@
-Great! Go ahead and merge this PR now that the tests are passing.
+This PR is ready to merge!
+
+I'll respond when you merge this pull request.

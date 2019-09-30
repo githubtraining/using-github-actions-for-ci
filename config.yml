@@ -88,8 +88,9 @@ steps:
         left: '%payload.check_suite.app.slug%'
         operator: ===
         right: github-actions
-      - type: getPullRequest
-        pullRequest: Add jest tests
+      - type: respond
+        with: merge.md
+        issue: Add jest tests
         action_id: jestPr
       - type: respond
         issue: CI for Node
@@ -107,6 +108,11 @@ steps:
     actions:
       - type: respond
         with: wait-for-first-test.md
+      - type: respond
+        with: goto.md
+        issue: Add jest tests
+        data:
+          url: '%payload.pull_request.html_url%'
 
   # Step 4
   # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
