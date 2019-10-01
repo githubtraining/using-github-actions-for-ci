@@ -184,7 +184,7 @@ steps:
             with: e-failed-run.md
             issue: CI for Node
             data:
-              troubleshooting: >-
+              troubleshooting: >+
                 - Make sure line 4 of `src/game.js` reads: `this.p2 = p2`
                 - In the change you're making in `src/game.js`, make sure you're using the same amount of indentation as the surrounding lines
                 - Ensure you didn't edit any unexpected files. This PR should only contain changes to `src/game.js`, `.github/workflows/nodejs.yml`, and `__test__/game.test.js`.
