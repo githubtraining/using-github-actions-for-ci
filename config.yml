@@ -141,11 +141,20 @@ steps:
         with: read-failed-log.md
         data:
           gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
-      - type: createPullRequestComment
-        pullRequest: CI for Node
-        position: 5
-        file: src/game.js
+      - type: octokit
+        method: pulls.createComment
+        owner: '%payload.repository.owner.login%'
+        repo: '%payload.repository.name%'
+        pull_number: '%actions.ciPr.data.number%'
         body: fix-bananas.md
+        commit_id: '%actions.ciPr.data.head.sha%'
+        path: src/game.js
+        position: 5
+      # - type: createPullRequestComment
+      #   pullRequest: CI for Node
+      #   position: 5
+      #   file: src/game.js
+      #   body: fix-bananas.md
           
   # Step 5
   # 1. Learner fixes the code that broke the build
