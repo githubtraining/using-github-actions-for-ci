@@ -150,7 +150,7 @@ steps:
           This line is the culprit. Let's fix it by initializing this instance of `p2` to the proper value. Edit the `src/game.js` file directly or accept the suggestion below.
 
           ```suggestion
-            this.p2 = p2 
+              this.p2 = p2 
           ```
 
           Once you commit the file, the tests will run again and should pass. I'll respond when the tests pass. If the tests don't pass, I'll provide some troubleshooting information.
@@ -183,6 +183,12 @@ steps:
           - type: respond
             with: e-failed-run.md
             issue: CI for Node
+            data:
+              troubleshooting: >-
+                - Make sure line 4 of `src/game.js` reads: `this.p2 = p2`
+                - In the change you're making in `src/game.js`, make sure you're using the same amount of indentation as the surrounding lines
+                - Ensure you didn't edit any unexpected files. This PR should only contain changes to `src/game.js`, `.github/workflows/nodejs.yml`, and `__test__/game.test.js`.
+                - If all fails, read the logs! They'll contain the most context-specific troubleshooting information. Click on "Details" in the merge box below, or go to the Actions tab directly.
       - type: createReview
         event: APPROVE
         body: merge.md
