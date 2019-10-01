@@ -5,3 +5,7 @@ To learn more about the fields discussed here, see:
 - [`npm install`](https://docs.npmjs.com/cli/install) on the npm Documentation 
 - [`npm run`](https://docs.npmjs.com/cli/run-script) on the npm Documentation
 - [`npm test`](https://docs.npmjs.com/cli/test.html) on the npm Documentation
+
+---
+
+If you don't see an explanation of your CI logs below when the workflow has executed, refresh this page. 

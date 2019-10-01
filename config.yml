@@ -145,7 +145,7 @@ steps:
         method: pullRequests.createComment
         owner: '%payload.repository.owner.login%'
         repo: '%payload.repository.name%'
-        pull_number: '%actions.ciPr.data.number%'
+        number: '%actions.ciPr.data.number%'
         body: fix-bananas.md
         commit_id: '%actions.ciPr.data.head.sha%'
         path: src/game.js

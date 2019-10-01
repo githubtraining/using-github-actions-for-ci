@@ -10,3 +10,7 @@ Let's first introduce CI to this repository. The codebase is written with Node.j
 1. Create a pull request titled **CI for Node**.
 
 I'll respond in the new pull request when I detect it has been created.
+
+---
+
+If at any point you're expecting a response and don't see one, refresh the page.
