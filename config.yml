@@ -127,7 +127,7 @@ steps:
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: gate
-        left: '/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gi'
+        left: '/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gim'
         operator: test
         right: '%payload.comment.body%'
         required: false
@@ -142,7 +142,7 @@ steps:
         data:
           gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
       - type: octokit
-        method: pulls.createComment
+        method: pullRequests.createComment
         owner: '%payload.repository.owner.login%'
         repo: '%payload.repository.name%'
         pull_number: '%actions.ciPr.data.number%'

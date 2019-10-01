@@ -1,4 +1,4 @@
-If you dig deeper into the logs, you may notice this error in particular:
+One of the failing tests is: `Initializes with two players`. If you dig deeper into the logs, you may notice these results in particular:
 
 ```shell
   ● Game › Game › Initializes with two players
@@ -19,4 +19,6 @@ If you dig deeper into the logs, you may notice this error in particular:
       at Object.toBe (__test__/game.test.js:14:23)
 ```
 
-This tells us that a unit test has been written that names the two players Salem and Nate, and then checks if that name sticks. However, we get :banana: Bananas instead of Nate! It's common practice to name test files the same as the code file they are testing, but with a `.test.js` extension. Therefore, we can assume that this error is caused by a problem in the `game.js` file. I'll point it out below.
+This tells us that a unit test has been written that names the two players Salem and Nate, and then checks if that name sticks. However, we get :banana: Bananas instead of Nate! How did this happen?
+
+To find out, it may help to know it's common practice to name test files the same as the code file they are testing, but with a `.test.js` extension. Therefore, we can assume that the test result from `game.test.js` is caused by a problem in `game.js`. I'll point it out below.
