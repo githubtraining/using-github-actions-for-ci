@@ -357,6 +357,14 @@ steps:
         with: use-download.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+      - type: createPullRequestComment
+        position: 17
+        file: .github/workflows/nodejs.yml
+        body: needs-suggestion.md
+      - type: createPullRequestComment
+        position: 29
+        file: .github/workflows/nodejs.yml
+        body: download-suggestion.md
 
 
   # Step 12
