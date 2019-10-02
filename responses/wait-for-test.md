@@ -1,6 +1,11 @@
 Great! We've now got two nicely separated `build` and `test` jobs. 
 
-Let's wait for the Actions workflow to run. I'll respond when it does.
+If you'd like to learn more about jobs, see:
+- [About GitHub Actions: Job](https://help.github.com/en/articles/about-github-actions#job) in GitHub Help
+- [About CI: Job](https://help.github.com/en/articles/about-continuous-integration#job) in GitHub Help
+- [Workflow syntax for GitHub Actions: `jobs`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jo
+
+I'll respond when the workflow runs your jobs.
 
 ---
 

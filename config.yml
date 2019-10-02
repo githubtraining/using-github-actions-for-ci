@@ -330,6 +330,10 @@ steps:
         with: use-upload.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+      - type: createPullRequestComment
+        position: 10
+        file: .github/workflows/nodejs.yml
+        body: upload-suggestion.md
 
   # Step 11
   # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
