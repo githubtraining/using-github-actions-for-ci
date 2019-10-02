@@ -319,14 +319,6 @@ steps:
         left: '%payload.check_suite.app.slug%'
         operator: ===
         right: github-actions
-      - type: gate
-        left: '%payload.check_suite.conclusion%'
-        operator: ===
-        right: success
-        else:
-          - type: respond
-            with: e-failed-run.md
-            issue: Improve CI
       - type: getPullRequest
         pullRequest: Improve CI
         action_id: ciPr
