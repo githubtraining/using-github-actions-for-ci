@@ -1,4 +1,6 @@
-Great! We've now got two nicely separated `build` and `test` jobs. 
+Great! We've now got two nicely separated `build` and `test` jobs. Our custom workflow now accounts for:
+- :white_check_mark: **test against multiple targets** so that we know if our supported operating systems and Node.js versions are working
+- :white_check_mark: **dedicated test job** so that we can separate out build from test details
 
 If you'd like to learn more about jobs, see:
 - [About GitHub Actions: Job](https://help.github.com/en/articles/about-github-actions#job) in GitHub Help
