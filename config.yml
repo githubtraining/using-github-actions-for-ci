@@ -429,6 +429,11 @@ steps:
       - type: respond
         with: choose-event.md
         data:
+      - type: createPullRequestComment
+        position: 1
+        file: .github/workflows/approval-workflow.yml
+        body: event-suggestion.md
+        data:
           editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
 
