@@ -141,22 +141,11 @@ steps:
         with: read-failed-log.md
         data:
           gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
-      - type: octokit
-        method: pullRequests.createComment
-        owner: '%payload.repository.owner.login%'
-        repo: '%payload.repository.name%'
-        number: '%actions.ciPr.data.number%'
-        body: >-
-          This line is the culprit. Let's fix it by initializing this instance of `p2` to the proper value. Edit the `src/game.js` file directly or accept the suggestion below.
-
-          ```suggestion
-              this.p2 = p2
-          ```
-
-          Once you commit the file, the tests will run again and should pass. I'll respond when the tests pass. If the tests don't pass, I'll provide some troubleshooting information.
-        commit_id: '%actions.ciPr.data.head.sha%'
-        path: src/game.js
+      - type: createPullRequestComment
         position: 5
+        file: src/game.js
+        body: test-suggestion.md
+        pullRequest: '%actions.ciPr.data.number%'
       # - type: createPullRequestComment
       #   pullRequest: CI for Node
       #   position: 5
@@ -334,6 +323,7 @@ steps:
         position: 10
         file: .github/workflows/nodejs.yml
         body: upload-suggestion.md
+        pullRequest: '%actions.ciPr.data.number%'
 
   # Step 11
   # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
