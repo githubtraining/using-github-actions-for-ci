@@ -396,12 +396,16 @@ steps:
       - type: mergeBranch
         head: master
         base: team-workflow
+      - type: getIssue
+        issue: A workflow for the entire team
+        action_id: workflow
       - type: createPullRequest
         title: A custom workflow
         body: partial-workflow.md
         head: team-workflow
         action_id: newPR
         data:
+          workflowIssue: '%actions.workflow.data.html_url%'
           fileUrl: '%payload.repository.html_url%/new/team-workflow/?filename=.github/workflows/approval-workflow.yml'
       - type: respond
         with: goto.md
