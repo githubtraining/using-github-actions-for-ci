@@ -41,10 +41,12 @@ Let's now try to create a dedicated test job. This will allow us to separate the
           node-version: [8.x, 10.x]
       steps:
       - uses: actions/checkout@v1
+      {% raw %}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      {% endraw %}
       - name: npm install, and test
         run: |
           npm install
@@ -81,12 +83,14 @@ jobs:
         os: [ubuntu-lastest, windows-2016]
         node-version: [8.x, 10.x]
 
+{% raw %}
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+{% endraw %}
     - name: npm install, and test
       run: |
         npm install

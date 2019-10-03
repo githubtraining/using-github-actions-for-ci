@@ -11,10 +11,12 @@ jobs:
     - name: Label when approved
       uses: pullreminders/label-when-approved-action@master
       env:
+{% raw %}
         APPROVALS: "1"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ADD_LABEL: "approved"
         REMOVE_LABEL: "awaiting review"
+{% endraw %}
 ```
 
 Here we're using the action with `uses`. You can find out more about it by going directly to [its repo](https://github.com/pullreminders/label-when-approved-action).
