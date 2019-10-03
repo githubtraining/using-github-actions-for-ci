@@ -354,7 +354,7 @@ steps:
         file: .github/workflows/nodejs.yml
         body: needs-suggestion.md
       - type: createPullRequestComment
-        position: 30
+        position: 31
         file: .github/workflows/nodejs.yml
         body: download-suggestion.md
 
