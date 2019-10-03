@@ -9,4 +9,4 @@ Full details are available in [Events that trigger workflows](https://help.githu
 
 For a review workflow, we want to engage with human reviews, instead. For example, we'll use the [Label approved pull requests action](https://github.com/pullreminders/label-when-approved-action) so that we can easily see when we've gotten enough reviews to merge a pull request. 
 
-Let's prep our review workflow by triggering it with a [`pull_request_review` event](https://help.github.com/en/articles/events-that-trigger-workflows#pull-request-review-event-pull_request_review)
+Let's prep our review workflow by triggering it with a [`pull_request_review` event](https://help.github.com/en/articles/events-that-trigger-workflows#pull-request-review-event-pull_request_review).

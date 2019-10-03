@@ -1,12 +1,1 @@
-Let's add a job to your brand new [workflow]({{ editUrl }}). 
-
-```yaml
-on: pull_request_review
-name: Label approved pull requests
-jobs:
-  labelWhenApproved:
-    name: Label when approved
-    runs-on: ubuntu-latest
-```
-
-Remember that virtual environment? We'll talk a little about the `runs-on` here.
+Great work! It's time to practice jobs. Let's create a new job called `labelWhenApproved`. In this job, we'll use an action that adds a label to any pull requests that have a preset number of approvals. These labels could be used as a visual indicator to your team that something is ready to merge, or even as a way to use other actions or tools to automatically merge pull requests when they receive the required number of approvals. 
