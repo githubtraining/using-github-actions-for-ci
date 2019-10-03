@@ -1,5 +1,6 @@
 Now that we've got our job created, let's add the step. Edit the [workflow file]{{ editUrl }} with the following.
 
+{% raw %}
 ```yaml
 on: pull_request_review
 name: Label approved pull requests
@@ -12,10 +13,11 @@ jobs:
       uses: pullreminders/label-when-approved-action@master
       env:
         APPROVALS: "1"
-        GITHUB_TOKEN: $\{\{ secrets.GITHUB_TOKEN \}\}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ADD_LABEL: "approved"
         REMOVE_LABEL: "awaiting review"
 ```
+{% endraw %}
 
 Here we're using the action with `uses`. You can find out more about it by going directly to [its repo](https://github.com/pullreminders/label-when-approved-action).
 

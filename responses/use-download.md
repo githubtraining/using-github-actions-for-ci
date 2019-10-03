@@ -13,6 +13,7 @@ To remedy this, we'll run `test` only after `build` is finished so the artifacts
         ...
     ```
 1. Add a step to your `test` job that uses the `download-artifacts` action.
+    {% raw %}
     ```yaml
       test:
         needs: build
@@ -35,5 +36,5 @@ To remedy this, we'll run `test` only after `build` is finished so the artifacts
           env:
             CI: true
     ```
-
+    {% endraw %}
 I'll respond when you've edited your workflow file. 

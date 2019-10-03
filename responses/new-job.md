@@ -32,6 +32,7 @@ Let's now try to create a dedicated test job. This will allow us to separate the
           npm run build
   ```
 1. In the newly created `test` job, include the following portions of your existing workflow:
+  {% raw %}
   ```yaml
   test:
     runs-on: ubuntu-latest
@@ -41,10 +42,10 @@ Let's now try to create a dedicated test job. This will allow us to separate the
         node-version: [8.x, 10.x]
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js $\{\{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: $\{\{ matrix.node-version }}
+        node-version: ${{ matrix.node-version }}
     - name: npm install, and test
       run: |
         npm install
@@ -52,9 +53,11 @@ Let's now try to create a dedicated test job. This will allow us to separate the
       env:
         CI: true
   ```
+  {% endraw %}
 
 <details><summary>If you'd like to copy and paste the full workflow file instead, click here to see it in its entirety.</summary>
 
+{% raw %}
 ```yaml
 name: Node CI
 
@@ -85,10 +88,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js $\{\{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: $\{\{ matrix.node-version }}
+        node-version: ${{ matrix.node-version }}
     - name: npm install, and test
       run: |
         npm install
@@ -96,6 +99,7 @@ jobs:
       env:
         CI: true
 ```
+{% endraw %}
 </details>
 
 When you commit to this branch, the workflow should run again. I'll respond when it is finished running.
