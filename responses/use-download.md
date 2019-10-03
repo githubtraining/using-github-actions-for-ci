@@ -24,12 +24,10 @@ To remedy this, we'll run `test` only after `build` is finished so the artifacts
           with: 
             name: webpack artifacts
             path: public
-    {% raw %}
-        - name: Use Node.js ${{ matrix.node-version }}
+        - name: Use Node.js {% raw %}${{ matrix.node-version }}{% endraw %}
           uses: actions/setup-node@v1
           with:
-            node-version: ${{ matrix.node-version }}
-    {% endraw %}
+            node-version: {% raw %}${{ matrix.node-version }}{% endraw %}
         - name: npm install, and test
           run: |
             npm install
