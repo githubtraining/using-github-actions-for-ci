@@ -247,6 +247,8 @@ steps:
       #       with: e-missing-file.md
       #       data:
       #         expected: .github/workflows/nodejs.yaml
+      - type: respond
+        with: explain-build-matrix.md
       - type: createPullRequestComment
         position: 5
         file: .github/workflows/nodejs.yml
