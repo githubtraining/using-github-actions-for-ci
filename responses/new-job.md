@@ -9,55 +9,54 @@ Let's now try to create a dedicated test job. This will allow us to separate the
 
 1. Edit [your workflow file]({{ fileUrl }})
 1. Create a new job called "test" as follows (we'll use ellipses `...` to only show the parts of the workflow we're interested in, but you should not copy the ellipses directly):
-  ```yaml
-  name: Node CI
+    ```yaml
+    name: Node CI
 
-  on: [push]
+    on: [push]
 
-  jobs:
-    build:
-      ...
-    test:
-      ...
-  ```  
+    jobs:
+      build:
+        ...
+      test:
+        ...
+    ```  
 1. In the `build` job, include the following portions of your existing workflow:
-  ```yaml
-  build:
-    runs-on: ubuntu-latest
-    steps:
+    ```yaml
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - name: npm install and build webpack
+          run: |
+            npm install
+            npm run build
+    ```
+1. In the newly created `test` job, include the following portions of your existing workflow:
+    ```yaml
+    test:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          os: [ubuntu-lastest, windows-2016]
+          node-version: [8.x, 10.x]
+      steps:
       - uses: actions/checkout@v1
-      - name: npm install and build webpack
+      {% raw %}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      {% endraw %}
+      - name: npm install, and test
         run: |
           npm install
-          npm run build
-  ```
-1. In the newly created `test` job, include the following portions of your existing workflow:
-  {% raw %}
-  ```yaml
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-lastest, windows-2016]
-        node-version: [8.x, 10.x]
-    steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, and test
-      run: |
-        npm install
-        npm test
-      env:
-        CI: true
-  ```
-  {% endraw %}
+          npm test
+        env:
+          CI: true
+    ```
 
 <details><summary>If you'd like to copy and paste the full workflow file instead, click here to see it in its entirety.</summary>
 
-{% raw %}
 ```yaml
 name: Node CI
 
@@ -86,12 +85,14 @@ jobs:
         os: [ubuntu-lastest, windows-2016]
         node-version: [8.x, 10.x]
 
+{% raw %}
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+{% endraw %}
     - name: npm install, and test
       run: |
         npm install
@@ -99,7 +100,6 @@ jobs:
       env:
         CI: true
 ```
-{% endraw %}
 </details>
 
 When you commit to this branch, the workflow should run again. I'll respond when it is finished running.

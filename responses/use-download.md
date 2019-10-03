@@ -13,7 +13,6 @@ To remedy this, we'll run `test` only after `build` is finished so the artifacts
         ...
     ```
 1. Add a step to your `test` job that uses the `download-artifacts` action.
-    {% raw %}
     ```yaml
       test:
         needs: build
@@ -25,10 +24,12 @@ To remedy this, we'll run `test` only after `build` is finished so the artifacts
           with: 
             name: webpack artifacts
             path: public
+    {% raw %}
         - name: Use Node.js ${{ matrix.node-version }}
           uses: actions/setup-node@v1
           with:
             node-version: ${{ matrix.node-version }}
+    {% endraw %}
         - name: npm install, and test
           run: |
             npm install
@@ -36,5 +37,4 @@ To remedy this, we'll run `test` only after `build` is finished so the artifacts
           env:
             CI: true
     ```
-    {% endraw %}
 I'll respond when you've edited your workflow file. 
