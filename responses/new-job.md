@@ -74,8 +74,6 @@ jobs:
 
   test:
 
-    needs: build
-
     runs-on: ubuntu-latest
 
     strategy:
