@@ -1,8 +1,8 @@
 <p align="center"><a href="https://lab.github.com/"><img alt="Learning Lab bot" src="https://user-images.githubusercontent.com/16547949/62085817-83232580-b22a-11e9-8693-7c54205b04e5.png"></a></p>
 
-<h1 align="center">Course: Set up Continuous Integration with GitHub Actions</h1>
+<h1 align="center">Course: Using GitHub Actions for CI</h1>
 
-This repository powers the Learning Lab course [_Using GitHub Actinons for CI_](https://lab.github.com/githubtraining/using-github-actions-for-ci). 
+This repository powers the Learning Lab course [_Using GitHub Actions for CI_](https://lab.github.com/githubtraining/using-github-actions-for-ci). 
 
 Every Learning Lab course is made up of:
 - a [course repository](https://github.com/githubtraining/set-up-continuous-integration-with-github-actions), and
