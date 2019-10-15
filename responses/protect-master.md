@@ -19,6 +19,6 @@ To add branch protections and continue with the course:
 1. Check **Require status checks to pass before merging**. 
 1. Check all build and test jobs that you'd like to see in the newly visible gray box.  
 1. Click **Create**.
-1. Return to this pull request, and approve the requested review.
+1. Return to this pull request, and [approve the requested review]({{ approvalUrl }}).
 
 I'll respond when I receive an approval from your pull request review. 

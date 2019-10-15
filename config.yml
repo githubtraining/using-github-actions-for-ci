@@ -509,6 +509,7 @@ steps:
         with: protect-master.md
         data:
           settingsUrl: '%payload.repository.html_url%/settings'
+          approvalUrl: '%payload.pull_request.html_url%/files#submit-review'
 
   # Step 18
   # 1. Learner sets branch protection and approves the PR
