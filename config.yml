@@ -500,7 +500,7 @@ steps:
             position: 5
             file: .github/workflows/approval-workflow.yml
             body: add-step-suggestion.md
-            pullRequest: A custom workflow
+            pullRequest: '%payload.issue.number%'
             data:
               editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
       - type: removeBranchProtection
