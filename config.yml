@@ -2,7 +2,7 @@ title: Using GitHub Actions for CI
 tagline: Set up continuous integration with GitHub Actions
 description: Learn how to create workflows that enable you to use Continuous Integration (CI) for your projects.
 template:
-  repo: using-github-actions-for-ci-template
+  repo: using-github-actions-for-ci-template #renamed the template repo
   name: using-github-actions-for-ci
 before:
   # 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects master branch
