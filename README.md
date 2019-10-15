@@ -2,11 +2,11 @@
 
 <h1 align="center">Course: Set up Continuous Integration with GitHub Actions</h1>
 
-This repository powers the Learning Lab course [_Introduction to GitHub_](). 
+This repository powers the Learning Lab course [_Using GitHub Actinons for CI_](https://lab.github.com/githubtraining/using-github-actions-for-ci). 
 
 Every Learning Lab course is made up of:
-- a [course repository](), and
-- a [template repository]()
+- a [course repository](https://github.com/githubtraining/set-up-continuous-integration-with-github-actions), and
+- a [template repository](https://github.com/githubtraining/using-github-actions-for-ci-template)
 
 The course repository is written in YAML and Markdown. The template repository could be written in any language that supports the learning objectives.
 
