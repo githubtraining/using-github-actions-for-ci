@@ -8,4 +8,4 @@ To learn more about the fields discussed here, see:
 - [Workflow syntax for GitHub Actions: `jobs.<job_id>.steps:`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idsteps) on GitHub Help 
 - [Referencing actions in your workflow](https://help.github.com/en/articles/configuring-a-workflow#referencing-actions-in-your-workflow) on GitHub Help
 - Source repository for the [`actions/checkout`](https://github.com/actions/checkout) action
-- Source repository for the [`actions/setup-node](https://github.com/actions/setup-node) action.
+- Source repository for the [`actions/setup-node`](https://github.com/actions/setup-node) action.
