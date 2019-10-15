@@ -521,7 +521,9 @@ steps:
   - title: Use branch protections
     description: Complete the automated review process by protecting the master branch
     link: '{{ repoUrl }}/pull/6'
-    event: pull_request_review.submitted
+    event: 
+      - pull_request_review.submitted
+      - pull_request.labeled
     actions:
       - type: gate
         every: true
@@ -547,6 +549,8 @@ steps:
         title: Congratulations!
         body: congratulations.md
         action_id: finalIssue
+      - type: respond
+        with: labeled.md
       - type: mergePullRequest
       - type: respond
         with: goto.md
