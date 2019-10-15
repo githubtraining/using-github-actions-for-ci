@@ -1,7 +1,7 @@
-The template workflow ran! But it failed :(
+The workflow ran! But it failed :sob:. That's OK though, every time CI fails it's an opportunity to learn from what's causing it. By running CI with GitHub Actions, we have access to the logs for the attempted build in the [Actions]({{ actionsUrl }}) tab and in the merge box for this pull request by clicking on "Details". If you navigate over to the build logs, you may notice that the error is "No tests found". 
 
-That's because the template workflow calls `npm test`. That command is using Jest, and looks for a `__test__` folder with unit tests inside. That doesn't exist on this branch.
+![screenshot of build log showing a missing `__test__` directory](https://user-images.githubusercontent.com/16547949/65921324-eeff4700-e3af-11e9-8625-3aacfe64d06b.png)
 
-Not to worry, I've got you covered! Navigate over to the open PR titled [Add Jest tests]({{ url }}) and merge it into this branch. That'll get us the test files we need.
+Learning how to read build logs and isolate the cause of the problem is an art on its own, but we'll try and cover some of the basics here. In our case, the source of the error is the `npm test` command. The `npm test` command looks for a testing framework. We want to use Jest, as we mentioned earlier. Jest requires unit tests in a [directory named `__test__`](https://jestjs.io/docs/en/configuration#testmatch-array-string). A `__test__` directory doesn't exist on this branch.
 
-I'll respond when you merge the pull request into this branch. 
+Not to worry, I've got you covered! Navigate over to the open PR titled [Add Jest tests]({{ url }}) and merge it into this branch. That'll get us the test files we need. I'll respond when you merge the pull request into this branch. 

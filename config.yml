@@ -26,7 +26,7 @@ before:
 steps:
 
   # Step 1
-  # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/node.js.yml)
+  # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/nodejs.yml)
   # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow.
@@ -54,6 +54,22 @@ steps:
         with: explain-template.md
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
+      - type: createPullRequestComment
+        position: 3
+        file: .github/workflows/nodejs.yml
+        body: explain-on.md
+      - type: createPullRequestComment
+        position: 8
+        file: .github/workflows/nodejs.yml
+        body: explain-job.md
+      - type: createPullRequestComment
+        position: 17
+        file: .github/workflows/nodejs.yml
+        body: explain-checkout.md
+      - type: createPullRequestComment
+        position: 24
+        file: .github/workflows/nodejs.yml
+        body: explain-run.md
       - type: createPullRequest
         title: Add jest tests
         body: merge-jest.md
@@ -72,14 +88,16 @@ steps:
         left: '%payload.check_suite.app.slug%'
         operator: ===
         right: github-actions
-      - type: getPullRequest
-        pullRequest: Add jest tests
+      - type: respond
+        with: merge.md
+        issue: Add jest tests
         action_id: jestPr
       - type: respond
         issue: CI for Node
         with: template-workflow-ran.md
         data:
           url: '%actions.jestPr.data.html_url%'
+          actionsUrl: '%payload.repsitory.html_url%/actions'
         
   # Step 3
   # 1. Learner adds a `test` script to `package.json`. Workflow still fails because the tests themselves are missing.
@@ -91,6 +109,13 @@ steps:
     actions:
       - type: respond
         with: wait-for-first-test.md
+        data:
+          actionsUrl: '%payload.repsitory.html_url%/actions'
+      - type: respond
+        with: goto.md
+        issue: Add jest tests
+        data:
+          url: '%payload.pull_request.html_url%'
 
   # Step 4
   # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
@@ -102,21 +127,30 @@ steps:
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: gate
-        left: '%payload.comment.body%'
+        left: '/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gim'
         operator: test
-        right: 'Initializes with two players'
+        right: '%payload.comment.body%'
+        required: false
         else:
           - type: respond
             with: e-test-name.md
-            data:
-              expected: Initializes with two players
       - type: getPullRequest
         pullRequest: CI for Node
         action_id: ciPr
       - type: respond
-        with: fix-test.md
+        with: read-failed-log.md
         data:
           gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+      - type: createPullRequestComment
+        position: 5
+        file: src/game.js
+        body: test-suggestion.md
+        pullRequest: '%actions.ciPr.data.number%'
+      # - type: createPullRequestComment
+      #   pullRequest: CI for Node
+      #   position: 5
+      #   file: src/game.js
+      #   body: fix-bananas.md
           
   # Step 5
   # 1. Learner fixes the code that broke the build
@@ -138,6 +172,15 @@ steps:
           - type: respond
             with: e-failed-run.md
             issue: CI for Node
+            data:
+              troubleshooting: >-
+                - Make sure line 4 of `src/game.js` reads: `this.p2 = p2`
+
+                - In the change you're making in `src/game.js`, make sure you're using the same amount of indentation as the surrounding lines
+
+                - Ensure you didn't edit any unexpected files. This PR should only contain changes to `src/game.js`, `.github/workflows/nodejs.yml`, and `__test__/game.test.js`.
+                
+                - If all fails, read the logs! They'll contain the most context-specific troubleshooting information. Click on "Details" in the merge box below, or go to the Actions tab directly.
       - type: createReview
         event: APPROVE
         body: merge.md
@@ -205,7 +248,11 @@ steps:
       #       data:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
-        with: add-windows.md
+        with: explain-build-matrix.md
+      - type: createPullRequestComment
+        position: 5
+        file: .github/workflows/nodejs.yml
+        body: add-windows.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -266,14 +313,6 @@ steps:
         left: '%payload.check_suite.app.slug%'
         operator: ===
         right: github-actions
-      - type: gate
-        left: '%payload.check_suite.conclusion%'
-        operator: ===
-        right: success
-        else:
-          - type: respond
-            with: e-failed-run.md
-            issue: Improve CI
       - type: getPullRequest
         pullRequest: Improve CI
         action_id: ciPr
@@ -282,6 +321,11 @@ steps:
         with: use-upload.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+      - type: createPullRequestComment
+        position: 10
+        file: .github/workflows/nodejs.yml
+        body: upload-suggestion.md
+        pullRequest: '%actions.ciPr.data.number%'
 
   # Step 11
   # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
@@ -305,6 +349,14 @@ steps:
         with: use-download.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+      - type: createPullRequestComment
+        position: 17
+        file: .github/workflows/nodejs.yml
+        body: needs-suggestion.md
+      - type: createPullRequestComment
+        position: 31
+        file: .github/workflows/nodejs.yml
+        body: download-suggestion.md
 
 
   # Step 12
@@ -344,12 +396,16 @@ steps:
       - type: mergeBranch
         head: master
         base: team-workflow
+      - type: getIssue
+        issue: A workflow for the entire team
+        action_id: workflow
       - type: createPullRequest
         title: A custom workflow
         body: partial-workflow.md
         head: team-workflow
         action_id: newPR
         data:
+          workflowIssue: '%actions.workflow.data.html_url%'
           fileUrl: '%payload.repository.html_url%/new/team-workflow/?filename=.github/workflows/approval-workflow.yml'
       - type: respond
         with: goto.md
@@ -372,6 +428,10 @@ steps:
         right: A custom workflow
       - type: respond
         with: choose-event.md
+      - type: createPullRequestComment
+        position: 1
+        file: .github/workflows/approval-workflow.yml
+        body: event-suggestion.md
         data:
           editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -390,6 +450,10 @@ steps:
         right: A custom workflow
       - type: respond
         with: add-job.md
+      - type: createPullRequestComment
+        position: 2
+        file: .github/workflows/approval-workflow.yml
+        body: add-job-suggestion.md
         data:
           editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -419,18 +483,33 @@ steps:
   - title: Automate approvals
     description: Use the community action to automate part of the review approval process
     link: '{{ repoUrl }}/pull/6'
-    event: pull_request.synchronize
+    event: 
+      - pull_request.synchronize
+      - issue_comment.created
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
         right: A custom workflow
+        else:
+          - type: gate
+            left: '/hint/gi'
+            operator: test
+            right: '%payload.comment.body%'
+          - type: createPullRequestComment
+            position: 5
+            file: .github/workflows/approval-workflow.yml
+            body: add-step-suggestion.md
+            pullRequest: '%payload.issue.number%'
+            data:
+              editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
       - type: removeBranchProtection
       - type: requestReviewFromRegistrant
       - type: respond
         with: protect-master.md
         data:
-          settingsUrl: '%payload.repository.html_url%/settings/branches'
+          settingsUrl: '%payload.repository.html_url%/settings'
+          approvalUrl: '%payload.pull_request.html_url%/files#submit-review'
 
   # Step 18
   # 1. Learner sets branch protection and approves the PR
@@ -442,7 +521,9 @@ steps:
   - title: Use branch protections
     description: Complete the automated review process by protecting the master branch
     link: '{{ repoUrl }}/pull/6'
-    event: pull_request_review.submitted
+    event: 
+      - pull_request_review.submitted
+      - pull_request.labeled
     actions:
       - type: gate
         every: true
@@ -468,6 +549,8 @@ steps:
         title: Congratulations!
         body: congratulations.md
         action_id: finalIssue
+      - type: respond
+        with: labeled.md
       - type: mergePullRequest
       - type: respond
         with: goto.md
