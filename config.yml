@@ -483,12 +483,25 @@ steps:
   - title: Automate approvals
     description: Use the community action to automate part of the review approval process
     link: '{{ repoUrl }}/pull/6'
-    event: pull_request.synchronize
+    event: 
+      - pull_request.synchronize
+      - issue_comment.created
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
         right: A custom workflow
+        else:
+          - type: gate
+            left: '/hint/gi'
+            operator: test
+            right: '%payload.comment.body%'
+          - type: createPullRequestComment
+            position: 5
+            file: .github/workflows/approval-workflow.yml
+            body: add-step-suggestion.md
+            data:
+              editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
       - type: removeBranchProtection
       - type: requestReviewFromRegistrant
       - type: respond
