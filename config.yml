@@ -507,7 +507,7 @@ steps:
       - type: respond
         with: protect-master.md
         data:
-          settingsUrl: '%payload.repository.html_url%/settings/branches'
+          settingsUrl: '%payload.repository.html_url%/settings'
 
   # Step 18
   # 1. Learner sets branch protection and approves the PR
