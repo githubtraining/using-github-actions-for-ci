@@ -1,9 +1,9 @@
-title: Set up continuous integration with GitHub Actions
-tagline: A brand new course on Learning Lab
-description: Set up CI with GitHub Actions
+title: Using GitHub Actions for CI
+tagline: Set up continuous integration with GitHub Actions
+description: Learn how to create workflows that enable you to use Continuous Integration (CI) for your projects.
 template:
-  repo: set-up-continuous-integration-with-github-actions-template
-  name: set-up-continuous-integration-with-github-actions
+  repo: using-github-actions-for-ci-template
+  name: using-github-actions-for-ci
 before:
   # 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects master branch
   # 1. Bot opens a bug report explaining the app is broken, asks learner to figure out what's wrong by adding some testing. 
