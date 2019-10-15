@@ -4,6 +4,6 @@
     on: pull_request_review
     jobs:
       labelWhenApproved:
-      runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
     ```
 1. Commit your changes to this branch
