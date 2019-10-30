@@ -89,7 +89,7 @@ steps:
         operator: ===
         right: github-actions
       - type: respond
-        with: 0X_merge.md
+        with: 02_merge.md
         issue: Add jest tests
         action_id: jestPr
       - type: respond
