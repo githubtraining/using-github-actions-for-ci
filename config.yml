@@ -190,7 +190,7 @@ steps:
   # 1. Learner merges PR
   # 1. Bot opens issue with description of the team's workflow, would like learner to help automate some of the tasks the team goes through. The requested changes require: branch protections, review approvals, easy way to see when enough approvals has been achieved, matrix build, save build artifacts, dedicated test job. We'll tackle some of the changes to the existing workflow file first, open a PR to target different Node versions.
   - title: Share the workflow with the team
-    description: Merge the PR containing your first workflow so the entire team can use it
+    description: Merge the pull request containing your first workflow so the entire team can use it
     event: pull_request.closed
     link: '{{ repoUrl }}/pull/2'
     actions:
