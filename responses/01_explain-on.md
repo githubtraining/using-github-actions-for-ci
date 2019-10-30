@@ -1,3 +1,5 @@
+## 'on:'
+
 The `on:` field is what tells GitHub Actions when to run. In this case, we're running the workflow anytime there's a `push`.
 
 To learn more about the fields discussed here, see:
