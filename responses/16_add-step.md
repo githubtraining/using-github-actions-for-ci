@@ -1,6 +1,13 @@
+# Add a step
+
 We've now got a job with the `labelWhenApproved` identifier. We're off to a great start!
 
-It's now time to use a community-created action. The action we'll use is [pullreminders/label-when-approved-action](https://github.com/pullreminders/label-when-approved-action). Let's see if you can use this action on your own. If you'd like a hint, submit a comment on this pull request with the word "hint". 
+It's now time to use a community-created action. The action we'll use is [pullreminders/label-when-approved-action](https://github.com/pullreminders/label-when-approved-action). 
+
+
+## Step 17: Automate approvals
+
+Let's see if you can use this action on your own. **If you'd like a hint, submit a comment on this pull request with the word "hint".**
 
 Here's some tips to get you going:
 - the workflow file needs a `steps:` block
@@ -10,5 +17,9 @@ Here's some tips to get you going:
   - `APPROVALS` is the number of required approvals that are required for a label to be applied, please set this to `"1"`
   - `GITHUB_TOKEN` is necessary so the action can create and apply labels to this repository. See the action's documentation for how to use it
   - `ADD_LABEL` is the name of the label which should be added when the number of approvals have been met, choose any label name you wish
+
+### :keyboard: Activity: Use the community action to automate part of the review approval process
+
+1. Using your prior knowledge, configure the [pullreminders/label-when-approved-action](https://github.com/pullreminders/label-when-approved-action) action in this workflow
 
 I'll respond when you push a new commit to this branch.
