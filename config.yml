@@ -382,7 +382,7 @@ steps:
 
   # Step 13
   - title: Share the improved CI workflow with the team
-    description: Merge the PR with the improved workflow
+    description: Merge the pull request with the improved workflow
     link: '{{ repoUrl }}/pull/5'
     event: pull_request.closed
     actions:
