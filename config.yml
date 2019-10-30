@@ -10,7 +10,7 @@ before:
   - type: updateBranchProtection
   - type: createIssue
     title: There's a bug!
-    body: bug.md
+    body: 00_bug.md
     data:
       actionsUrl: '%payload.repository.html_url%/actions/new'
 
@@ -51,28 +51,28 @@ steps:
             data:
               title: CI for Node
       - type: respond
-        with: explain-template.md
+        with: 01_explain-template.md
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
       - type: createPullRequestComment
         position: 3
         file: .github/workflows/nodejs.yml
-        body: explain-on.md
+        body: 01_explain-on.md
       - type: createPullRequestComment
         position: 8
         file: .github/workflows/nodejs.yml
-        body: explain-job.md
+        body: 01_explain-job.md
       - type: createPullRequestComment
         position: 17
         file: .github/workflows/nodejs.yml
-        body: explain-checkout.md
+        body: 01_explain-checkout.md
       - type: createPullRequestComment
         position: 24
         file: .github/workflows/nodejs.yml
-        body: explain-run.md
+        body: 01_explain-run.md
       - type: createPullRequest
         title: Add jest tests
-        body: merge-jest.md
+        body: 01_merge-jest.md
         base: '%payload.pull_request.head.ref%'
         head: add-jest
 
@@ -89,12 +89,12 @@ steps:
         operator: ===
         right: github-actions
       - type: respond
-        with: merge.md
+        with: 0X_merge.md
         issue: Add jest tests
         action_id: jestPr
       - type: respond
         issue: CI for Node
-        with: template-workflow-ran.md
+        with: 02_template-workflow-ran.md
         data:
           url: '%actions.jestPr.data.html_url%'
           actionsUrl: '%payload.repsitory.html_url%/actions'
@@ -108,11 +108,11 @@ steps:
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: respond
-        with: wait-for-first-test.md
+        with: 03_wait-for-first-test.md
         data:
           actionsUrl: '%payload.repsitory.html_url%/actions'
       - type: respond
-        with: goto.md
+        with: 0X_goto.md
         issue: Add jest tests
         data:
           url: '%payload.pull_request.html_url%'
@@ -138,13 +138,13 @@ steps:
         pullRequest: CI for Node
         action_id: ciPr
       - type: respond
-        with: read-failed-log.md
+        with: 04_read-failed-log.md
         data:
           gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
       - type: createPullRequestComment
         position: 5
         file: src/game.js
-        body: test-suggestion.md
+        body: 04_test-suggestion.md
         pullRequest: '%actions.ciPr.data.number%'
       # - type: createPullRequestComment
       #   pullRequest: CI for Node
@@ -183,7 +183,7 @@ steps:
                 - If all fails, read the logs! They'll contain the most context-specific troubleshooting information. Click on "Details" in the merge box below, or go to the Actions tab directly.
       - type: createReview
         event: APPROVE
-        body: merge.md
+        body: 0X_merge.md
         pullRequest: CI for Node
 
   # Step 6
@@ -203,12 +203,12 @@ steps:
             right: CI for Node
       - type: createIssue
         title: A workflow for the entire team
-        body: custom-workflow.md
+        body: 06_custom-workflow.md
         action_id: newIssue
         data:
           workflowUrl: '%payload.repository.html_url%/edit/master/.github/workflows/nodejs.yml'
       - type: respond
-        with: goto.md
+        with: 0X_goto.md
         data:
           url: '%actions.newIssue.data.html_url%'
 
@@ -248,11 +248,11 @@ steps:
       #       data:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
-        with: explain-build-matrix.md
+        with: 07_explain-build-matrix.md
       - type: createPullRequestComment
         position: 5
         file: .github/workflows/nodejs.yml
-        body: add-windows.md
+        body: 07_add-windows.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -275,7 +275,7 @@ steps:
       #       data:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
-        with: new-job.md
+        with: 08_new-job.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -297,7 +297,7 @@ steps:
       #       data:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
-        with: wait-for-test.md
+        with: 09_wait-for-test.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -318,13 +318,13 @@ steps:
         action_id: ciPr
       - type: respond
         issue: Improve CI
-        with: use-upload.md
+        with: 10_use-upload.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
       - type: createPullRequestComment
         position: 10
         file: .github/workflows/nodejs.yml
-        body: upload-suggestion.md
+        body: 10_upload-suggestion.md
         pullRequest: '%actions.ciPr.data.number%'
 
   # Step 11
@@ -346,17 +346,17 @@ steps:
       #       data:
       #         expected: .github/workflows/nodejs.yaml
       - type: respond
-        with: use-download.md
+        with: 11_use-download.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
       - type: createPullRequestComment
         position: 17
         file: .github/workflows/nodejs.yml
-        body: needs-suggestion.md
+        body: 11_needs-suggestion.md
       - type: createPullRequestComment
         position: 31
         file: .github/workflows/nodejs.yml
-        body: download-suggestion.md
+        body: 11_download-suggestion.md
 
 
   # Step 12
@@ -378,7 +378,7 @@ steps:
       #         expected: .github/workflows/nodejs.yaml
       - type: createReview
         event: APPROVE
-        body: merge-improved-ci.md
+        body: 12_merge-improved-ci.md
 
   # Step 13
   - title: Share the improved CI workflow with the team
@@ -401,14 +401,14 @@ steps:
         action_id: workflow
       - type: createPullRequest
         title: A custom workflow
-        body: partial-workflow.md
+        body: 13_partial-workflow.md
         head: team-workflow
         action_id: newPR
         data:
           workflowIssue: '%actions.workflow.data.html_url%'
           fileUrl: '%payload.repository.html_url%/new/team-workflow/?filename=.github/workflows/approval-workflow.yml'
       - type: respond
-        with: goto.md
+        with: 0X_goto.md
         data:
           url: '%actions.newPR.data.html_url%'
 
@@ -427,11 +427,11 @@ steps:
         operator: ===
         right: A custom workflow
       - type: respond
-        with: choose-event.md
+        with: 14_choose-event.md
       - type: createPullRequestComment
         position: 1
         file: .github/workflows/approval-workflow.yml
-        body: event-suggestion.md
+        body: 14_event-suggestion.md
         data:
           editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -449,11 +449,11 @@ steps:
         operator: ===
         right: A custom workflow
       - type: respond
-        with: add-job.md
+        with: 15_add-job.md
       - type: createPullRequestComment
         position: 2
         file: .github/workflows/approval-workflow.yml
-        body: add-job-suggestion.md
+        body: 15_add-job-suggestion.md
         data:
           editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -470,7 +470,7 @@ steps:
         operator: ===
         right: A custom workflow
       - type: respond
-        with: add-step.md
+        with: 16_add-step.md
         data:
           editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
 
@@ -499,14 +499,14 @@ steps:
           - type: createPullRequestComment
             position: 5
             file: .github/workflows/approval-workflow.yml
-            body: add-step-suggestion.md
+            body: 17_add-step-suggestion.md
             pullRequest: '%payload.issue.number%'
             data:
               editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
       - type: removeBranchProtection
       - type: requestReviewFromRegistrant
       - type: respond
-        with: protect-master.md
+        with: 17_protect-master.md
         data:
           settingsUrl: '%payload.repository.html_url%/settings'
           approvalUrl: '%payload.pull_request.html_url%/files#submit-review'
@@ -547,12 +547,12 @@ steps:
           with: e-protect.md
       - type: createIssue
         title: Congratulations!
-        body: congratulations.md
+        body: 18_congratulations.md
         action_id: finalIssue
       - type: respond
-        with: labeled.md
+        with: 18_labeled.md
       - type: mergePullRequest
       - type: respond
-        with: goto.md
+        with: 0X_goto.md
         data:
           url: '%actions.finalIssue.data.html_url%'
