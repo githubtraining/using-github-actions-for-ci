@@ -10,4 +10,11 @@ If you navigate over to the build logs, you may notice that the error is "No tes
 
 Learning how to read build logs and isolate the cause of the problem is an art on its own. We'll try and cover some of the basics here. In our case, the source of the error is the `npm test` command. The `npm test` command looks for a testing framework. We want to use Jest, as we mentioned earlier. Jest requires unit tests in a [directory named `__test__`](https://jestjs.io/docs/en/configuration#testmatch-array-string). A `__test__` directory doesn't exist on this branch.
 
+## Step 3: Add your first test
+
 Not to worry, I've got you covered! Navigate to the open pull request titled [Add Jest tests]({{ url }}) and merge it into this branch. That'll get us the test files we need. I'll respond when you merge the [Add Jest tests pull request]({{ url }}) into this branch.
+
+### :keyboard: Activity: Add your first test script for CI to pick up
+
+1.  Navigate to the open pull request titled [Add Jest tests]({{ url }})
+2.  Merge the pull request
