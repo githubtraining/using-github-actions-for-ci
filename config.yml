@@ -29,7 +29,7 @@ steps:
   # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/nodejs.yml)
   # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
   - title: Use a templated workflow
-    description: Create a pull request with a templated workflow.
+    description: Create a pull request with a templated workflow
     event: pull_request
     link: '{{ repoUrl }}/issues/1'
     actions:
@@ -80,7 +80,7 @@ steps:
   # 1. GitHub sends us a workflow run.
   # 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
   - title: Run a templated workflow
-    description: Wait for GitHub to run the templated workflow and report back the results.
+    description: Wait for GitHub to run the templated workflow and report back the results
     event: check_suite.completed
     link: '{{ repoUrl }}/pull/2'
     actions:
@@ -190,7 +190,7 @@ steps:
   # 1. Learner merges PR
   # 1. Bot opens issue with description of the team's workflow, would like learner to help automate some of the tasks the team goes through. The requested changes require: branch protections, review approvals, easy way to see when enough approvals has been achieved, matrix build, save build artifacts, dedicated test job. We'll tackle some of the changes to the existing workflow file first, open a PR to target different Node versions.
   - title: Share the workflow with the team
-    description: Merge the PR containing your first workflow so the entire team can use it.
+    description: Merge the PR containing your first workflow so the entire team can use it
     event: pull_request.closed
     link: '{{ repoUrl }}/pull/2'
     actions:
