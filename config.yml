@@ -1,4 +1,4 @@
-title: GitHub Actions: Continuous Integration
+title: "GitHub Actions: Continuous Integration"
 tagline: Use GitHub Actions to automate your unit tests
 description: Learn how to create workflows that enable you to use Continuous Integration (CI) for your projects.
 template:
