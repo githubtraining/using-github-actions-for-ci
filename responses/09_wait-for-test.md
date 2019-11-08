@@ -1,3 +1,5 @@
+# Waiting on tests
+
 Great! We've now got two nicely separated `build` and `test` jobs. Our custom workflow now accounts for:
 - :white_check_mark: **test against multiple targets** so that we know if our supported operating systems and Node.js versions are working
 - :white_check_mark: **dedicated test job** so that we can separate out build from test details
@@ -7,7 +9,11 @@ If you'd like to learn more about jobs, see:
 - [About CI: Job](https://help.github.com/en/articles/about-continuous-integration#job) in GitHub Help
 - [Workflow syntax for GitHub Actions: `jobs`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs)
 
-I'll respond when the workflow runs your jobs.
+## Step 10: Run multiple jobs
+
+### :keyboard: Activity: Wait for the result of multiple jobs in your workflow
+
+No action required in this step - just waiting. I'll respond when the workflow runs your jobs.
 
 ---
 

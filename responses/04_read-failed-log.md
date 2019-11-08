@@ -1,3 +1,5 @@
+# Reading failed logs
+
 One of the failing tests is: `Initializes with two players`. If you dig deeper into the logs, you may notice these results in particular:
 
 ```shell
@@ -23,7 +25,7 @@ This tells us that a unit test has been written that names the two players Salem
 
 To find out, it may help to know it's common practice to name test files the same as the code file they are testing, but with a `.test.js` extension. Therefore, we can assume that the test result from `game.test.js` is caused by a problem in `game.js`. I'll point it out below.
 
-Make the changes suggested below. I'll respond when the workflow runs. 
+Make the changes suggested below. I'll respond when the workflow runs.
 
 ---
 
