@@ -1,6 +1,6 @@
 
 ```suggestion
-        os: [ubuntu-lastest, windows-2016]
+        os: [ubuntu-latest, windows-2016]
         node-version: [8.x, 10.x]
 ```
 
