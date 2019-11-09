@@ -322,7 +322,7 @@ steps:
         data:
           fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
       - type: createPullRequestComment
-        position: 10
+        position: 15
         file: .github/workflows/nodejs.yml
         body: 10_upload-suggestion.md
         pullRequest: '%actions.ciPr.data.number%'
