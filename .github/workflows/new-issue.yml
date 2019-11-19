@@ -2,7 +2,7 @@ name: Move new issues into Triage
 
 on:
   issues:
-    types: [opened]
+    types: [opened, reopened]
 
 jobs:
   automate-project-columns:
@@ -10,6 +10,6 @@ jobs:
     steps:
       - uses: alex-page/github-project-automation-plus@v0.1.0
         with:
-          project: test
+          project: Learning Lab Course maintenance
           column: Triage
           repo-token: ${{ secrets.GH_PAT }}
