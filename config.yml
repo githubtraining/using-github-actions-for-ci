@@ -87,7 +87,7 @@ steps:
       - type: gate
         left: '%payload.check_suite.app.name%'
         operator: ===
-        right: github-actions
+        right: "Github Actions"
       - type: respond
         with: 0X_merge.md
         issue: Add jest tests
@@ -163,7 +163,7 @@ steps:
       - type: gate
         left: '%payload.check_suite.app.name%'
         operator: ===
-        right: github-actions
+        right: "Github Actions"
       - type: gate
         left: '%payload.check_suite.conclusion%'
         operator: ===
@@ -312,7 +312,7 @@ steps:
       - type: gate
         left: '%payload.check_suite.app.name%'
         operator: ===
-        right: github-actions
+        right: "Github Actions"
       - type: getPullRequest
         pullRequest: Improve CI
         action_id: ciPr
