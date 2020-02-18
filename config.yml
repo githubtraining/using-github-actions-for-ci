@@ -85,7 +85,7 @@ steps:
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: gate
-        left: '%payload.check_suite.app.name%'
+        left: '%payload.check_suite.name%'
         operator: ===
         right: github-actions
       - type: respond
@@ -161,7 +161,7 @@ steps:
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: gate
-        left: '%payload.check_suite.app.name%'
+        left: '%payload.check_suite.name%'
         operator: ===
         right: github-actions
       - type: gate
@@ -310,7 +310,7 @@ steps:
     link: '{{ repoUrl }}/pull/5'
     actions:
       - type: gate
-        left: '%payload.check_suite.app.name%'
+        left: '%payload.check_suite.name%'
         operator: ===
         right: github-actions
       - type: getPullRequest
