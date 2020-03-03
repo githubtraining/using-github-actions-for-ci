@@ -1,6 +1,11 @@
 title: "GitHub Actions: Continuous Integration"
-tagline: Use GitHub Actions to automate your unit tests
 description: Learn how to create workflows that enable you to use Continuous Integration (CI) for your projects.
+tags:
+  - GitHub Actions
+  - Workflows
+  - CI
+  - Continuous Integration
+  - Integration
 template:
   repo: using-github-actions-for-ci-template #renamed the template repo
   name: github-actions-for-ci
