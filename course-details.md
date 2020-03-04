@@ -39,7 +39,7 @@ And a great follow-on course is
 - [Continuous Delivery with GitHub Actions](https://lab.github.com/githubtraining/github-actions:-continuous-delivery/)
 
 ## Projects used
-This makes use of the following technologies:
+This course makes use of the following technologies:
 
 - [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Jest](https://jestjs.io), a popular JavaScript testing framework.
