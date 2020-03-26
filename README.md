@@ -1,11 +1,11 @@
 <p align="center"><a href="https://lab.github.com/"><img alt="Learning Lab bot" src="https://user-images.githubusercontent.com/16547949/62085817-83232580-b22a-11e9-8693-7c54205b04e5.png"></a></p>
 
-<h1 align="center">Course: Using GitHub Actions for CI</h1>
+<h1 align="center">Course: GitHub Actions: Continuous Integration</h1>
 
-This repository powers the Learning Lab course [_Using GitHub Actions for CI_](https://lab.github.com/githubtraining/using-github-actions-for-ci). 
+This repository powers the Learning Lab course [_GitHub Actions: Continuous Integration_](https://lab.github.com/githubtraining/github-actions:-continuous-integration/). 
 
 Every Learning Lab course is made up of:
-- a [course repository](https://github.com/githubtraining/set-up-continuous-integration-with-github-actions), and
+- a [course repository](https://github.com/githubtraining/using-github-actions-for-ci), and
 - a [template repository](https://github.com/githubtraining/using-github-actions-for-ci-template)
 
 The course repository is written in YAML and Markdown. The template repository could be written in any language that supports the learning objectives.
