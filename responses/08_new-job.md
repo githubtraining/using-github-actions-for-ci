@@ -41,7 +41,7 @@ Let's now try to create a dedicated test job. This will allow us to separate the
       runs-on: ubuntu-latest
       strategy:
         matrix:
-          os: [ubuntu-lastest, windows-2016]
+          os: [ubuntu-latest, windows-2016]
           node-version: [8.x, 10.x]
       steps:
       - uses: actions/checkout@v1

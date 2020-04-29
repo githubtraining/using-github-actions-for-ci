@@ -8,7 +8,7 @@ Since we'd like to support deploying our app to Windows environments, let's add 
 You can follow the suggestion, or manually make the changes in the numbered instructions.
 
 ```suggestion
-        os: [ubuntu-lastest, windows-2016]
+        os: [ubuntu-latest, windows-2016]
         node-version: [8.x, 10.x]
 ```
 
