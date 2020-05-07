@@ -17,7 +17,9 @@ before:
     title: There's a bug!
     body: 00_bug.md
     data:
-      actionsUrl: '%payload.repository.html_url%/actions/new'
+      actionsUrl: '{{ payload.repository.html_url }}/actions/new'
+    store:
+      first_issue_url: '{{ result.data.html_url }}'
 
 # Repository artifacts
 # 1. Issue: There's a bug!
@@ -36,7 +38,7 @@ steps:
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow
     event: pull_request
-    link: '{{ repoUrl }}/issues/1'
+    link: '{{ store.first_issue_url }}'
     actions:
       - type: gate
         gates:
@@ -55,6 +57,8 @@ steps:
             with: e-rename-pr.md
             data:
               title: CI for Node
+        store:
+          ci_for_node_pr: '{{ payload.pull_request.number }}'
       - type: respond
         with: 01_explain-template.md
         data:
@@ -80,6 +84,8 @@ steps:
         body: 01_merge-jest.md
         base: '%payload.pull_request.head.ref%'
         head: add-jest
+        store:
+          second_pr_url: '{{ result.data.html_url }}'
 
   # Step 2
   # 1. GitHub sends us a workflow run.
@@ -87,7 +93,7 @@ steps:
   - title: Run a templated workflow
     description: Wait for GitHub to run the templated workflow and report back the results
     event: check_suite.completed
-    link: '{{ repoUrl }}/pull/2'
+    link: '{{ store.second_pr_url }}'
     actions:
       - type: gate
         left: '%payload.check_suite.app.slug%'
@@ -110,7 +116,7 @@ steps:
   - title: Add your first test
     description: Add your first test script for CI to pick up
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/2'
+    link: '{{ store.second_pr_url }}'
     actions:
       - type: respond
         with: 03_wait-for-first-test.md
@@ -129,7 +135,7 @@ steps:
   - title: Read an Actions log
     description: Tell the bot which test is failing so we can fix it
     event: issue_comment.created
-    link: '{{ repoUrl }}/pull/2'
+    link: '{{ store.second_pr_url }}'
     actions:
       - type: gate
         left: '/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gim'
@@ -140,7 +146,7 @@ steps:
           - type: respond
             with: e-test-name.md
       - type: getPullRequest
-        pullRequest: CI for Node
+        pullRequest: '{{ store.ci_for_node_pr }}'
         action_id: ciPr
       - type: respond
         with: 04_read-failed-log.md
@@ -163,7 +169,7 @@ steps:
   - title: Fix the test
     description: Edit the file that's causing the test to fail
     event: check_suite.completed
-    link: '{{ repoUrl }}/pull/2'
+    link: '{{ store.second_pr_url }}'
     actions:
       - type: gate
         left: '%payload.check_suite.app.slug%'
@@ -197,7 +203,7 @@ steps:
   - title: Share the workflow with the team
     description: Merge the pull request containing your first workflow so the entire team can use it
     event: pull_request.closed
-    link: '{{ repoUrl }}/pull/2'
+    link: '{{ store.second_pr_url }}'
     actions:
       - type: gate
         every: true
@@ -212,6 +218,8 @@ steps:
         action_id: newIssue
         data:
           workflowUrl: '%payload.repository.html_url%/edit/master/.github/workflows/nodejs.yml'
+        store:
+          workflow_issue_url: '{{ result.data.html_url }}'
       - type: respond
         with: 0X_goto.md
         data:
@@ -223,7 +231,7 @@ steps:
   - title: Create a custom GitHub Actions workflow
     description: Edit the existing workflow with new build targets
     event: pull_request
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ store.workflow_issue_url }}'
     actions:
       - type: gate
         gates:
@@ -260,6 +268,8 @@ steps:
         body: 07_add-windows.md
         data:
           fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+        store:
+          node_version_pr: '{{ payload.pull_request.html_url }}'
 
   # Step 8
   # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
@@ -267,7 +277,7 @@ steps:
   - title: Target a Windows environment
     description: Edit your workflow file to build for Windows environments
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ store.node_version_pr }}'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -289,7 +299,7 @@ steps:
   - title: Use multiple jobs
     description: Edit your workflow file to separate build and test jobs
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ store.node_version_pr }}'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -312,7 +322,7 @@ steps:
   - title: Run multiple jobs
     description: Wait for the result of multiple jobs in your workflow
     event: check_suite.completed
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ store.node_version_pr }}'
     actions:
       - type: gate
         left: '%payload.check_suite.app.slug%'
@@ -338,7 +348,7 @@ steps:
   - title: Upload a job's build artifacts
     description: Use the upload action in your workflow file to save a job's build artifacts
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ store.node_version_pr }}'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -369,7 +379,7 @@ steps:
   - title: Download a job's build artifacts
     description: Use the download action in your workflow file to access a prior job's build artifacts
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ store.node_version_pr }}'
     actions:
       # - type: findInTree
       #   path: .github/workflows/nodejs.yml
@@ -388,7 +398,7 @@ steps:
   # Step 13
   - title: Share the improved CI workflow with the team
     description: Merge the pull request with the improved workflow
-    link: '{{ repoUrl }}/pull/5'
+    link: '{{ store.node_version_pr }}'
     event: pull_request.closed
     actions:
       - type: gate
@@ -401,17 +411,16 @@ steps:
       - type: mergeBranch
         head: master
         base: team-workflow
-      - type: getIssue
-        issue: A workflow for the entire team
-        action_id: workflow
       - type: createPullRequest
         title: A custom workflow
         body: 13_partial-workflow.md
         head: team-workflow
         action_id: newPR
         data:
-          workflowIssue: '%actions.workflow.data.html_url%'
+          workflowIssue: '{{ store.workflow_issue_url }}'
           fileUrl: '%payload.repository.html_url%/new/team-workflow/?filename=.github/workflows/approval-workflow.yml'
+        store:
+          workflow_pr_url: '{{ result.data.html_url }}'
       - type: respond
         with: 0X_goto.md
         data:
@@ -424,7 +433,7 @@ steps:
   # 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
   - title: Automate the review process
     description: Add a new workflow file to automate the team's review process
-    link: '{{ repoUrl }}/pull/6'
+    link: '{{ store.workflow_pr_url }}'
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -446,7 +455,7 @@ steps:
   # 1. Bot asks learner to add a job with their own title, explains what that does
   - title: Use an action to automate pull request reviews
     description: Use the community action in your new workflow
-    link: '{{ repoUrl }}/pull/6'
+    link: '{{ store.workflow_pr_url }}'
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -467,7 +476,7 @@ steps:
   # 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
   - title: Create an approval job in your new workflow
     description: In your new workflow file, create a new job that'll use the community action
-    link: '{{ repoUrl }}/pull/6'
+    link: '{{ store.workflow_pr_url }}'
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -487,7 +496,7 @@ steps:
   # 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
   - title: Automate approvals
     description: Use the community action to automate part of the review approval process
-    link: '{{ repoUrl }}/pull/6'
+    link: '{{ store.workflow_pr_url }}'
     event: 
       - pull_request.synchronize
       - issue_comment.created
@@ -525,7 +534,7 @@ steps:
   # 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
   - title: Use branch protections
     description: Complete the automated review process by protecting the master branch
-    link: '{{ repoUrl }}/pull/6'
+    link: '{{ store.workflow_pr_url }}'
     event: 
       - pull_request_review.submitted
       - pull_request.labeled
