@@ -20,7 +20,7 @@ _You can follow the manual steps below, or accept the suggestion in the followin
       build:
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v1
+          - uses: actions/checkout@v2
           - name: npm install and build webpack
             run: |
               npm install

@@ -27,7 +27,7 @@ _You can follow the manual steps below, or accept the suggestions in the followi
         runs-on: ubuntu-latest
         ...
         steps:
-        - uses: actions/checkout@v1
+        - uses: actions/checkout@v2
         - uses: actions/download-artifact@master
           with: 
             name: webpack artifacts
