@@ -12,7 +12,7 @@ Let's dig into the vocabulary of GitHub Actions.
 #### What is `checkout`?
 
 The power of **GitHub** Actions lies in access to actions written by the :sparkles: GitHub community. Here, we'll use two Actions officially written and supported by GitHub:
-- `actions/checkout@v1` is used to ensure our virtual machine has a copy of our codebase. The checked out code will be used to run tests against.
+- `actions/checkout@v2` is used to ensure our virtual machine has a copy of our codebase. The checked out code will be used to run tests against.
 - `actions/setup-node@v1` is used to set up proper versions of Node.js since we'll be performing testing against multiple versions.
 
 To learn more about the fields discussed here, see:
