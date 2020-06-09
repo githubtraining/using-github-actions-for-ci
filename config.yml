@@ -60,19 +60,19 @@ steps:
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
       - type: createPullRequestComment
-        position: 3
+        position: 6
         file: .github/workflows/nodejs.yml
         body: 01_explain-on.md
       - type: createPullRequestComment
-        position: 8
+        position: 12
         file: .github/workflows/nodejs.yml
         body: 01_explain-job.md
       - type: createPullRequestComment
-        position: 17
+        position: 21
         file: .github/workflows/nodejs.yml
         body: 01_explain-checkout.md
       - type: createPullRequestComment
-        position: 24
+        position: 27
         file: .github/workflows/nodejs.yml
         body: 01_explain-run.md
       - type: createPullRequest

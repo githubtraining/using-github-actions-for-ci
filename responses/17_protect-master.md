@@ -20,7 +20,7 @@ Next, add branch protections and continue with the course.
 ### :keyboard: Activity: Complete the automated review process by protecting the master branch
 
 1. Go to [**Branches**]({{ settingsUrl}}/branches) settings. You can navigate to that page manually by clicking on the right-most tab in the top of the repository called **Settings** and then clicking on **Branches**.
-2. Click on [**Add rule**]({{ settingsUrl }}/branch_protection_rules/new).
+2. Click on [**Add rule**]({{ settingsUrl }}/branch_protection_rules/new) under "Branch protection rules".
 3. Type `master` in **Branch name pattern**.
 4. Check **Require pull request reviews before merging**.
 5. Check **Require status checks to pass before merging**.
