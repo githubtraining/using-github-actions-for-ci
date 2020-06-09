@@ -29,7 +29,7 @@ Let's now try to create a dedicated test job. This will allow us to separate the
     build:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v1
+        - uses: actions/checkout@v2
         - name: npm install and build webpack
           run: |
             npm install
@@ -44,7 +44,7 @@ Let's now try to create a dedicated test job. This will allow us to separate the
           os: [ubuntu-latest, windows-2016]
           node-version: [8.x, 10.x]
       steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js {% raw %}${{ matrix.node-version }}{% endraw %}
         uses: actions/setup-node@v1
         with:
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: npm install and build webpack
         run: |
           npm install
@@ -82,11 +82,11 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-lastest, windows-2016]
+        os: [ubuntu-latest, windows-2016]
         node-version: [8.x, 10.x]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Use Node.js {% raw %}${{ matrix.node-version }}{% endraw %}
       uses: actions/setup-node@v1
       with:

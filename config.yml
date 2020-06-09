@@ -11,15 +11,15 @@ template:
   name: github-actions-for-ci
 before:
   # 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects master branch
-  # 1. Bot opens a bug report explaining the app is broken, asks learner to figure out what's wrong by adding some testing. 
+  # 1. Bot opens a bug report explaining the app is broken, asks learner to figure out what's wrong by adding some testing.
   - type: updateBranchProtection
   - type: createIssue
     title: There's a bug!
     body: 00_bug.md
     data:
-      actionsUrl: '{{ payload.repository.html_url }}/actions/new'
+      actionsUrl: "{{ payload.repository.html_url }}/actions/new"
     store:
-      first_issue_url: '{{ result.data.html_url }}'
+      first_issue_url: "{{ result.data.html_url }}"
 
 # Repository artifacts
 # 1. Issue: There's a bug!
@@ -31,25 +31,24 @@ before:
 # 7. Issue: Congratulations
 
 steps:
-
   # Step 1
-  # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/nodejs.yml)
-  # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow. 
+  # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/node.js.yml)
+  # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow.
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow
     event: pull_request
-    link: '{{ store.first_issue_url }}'
+    link: "{{ store.first_issue_url }}"
     actions:
       - type: gate
         gates:
-        - left: '%payload.action%'
-          operator: ===
-          right: opened
-        - left: '%payload.action%'
-          operator: ===
-          right: edited
+          - left: "%payload.action%"
+            operator: ===
+            right: opened
+          - left: "%payload.action%"
+            operator: ===
+            right: edited
       - type: gate
-        left: '%payload.pull_request.title%'
+        left: "%payload.pull_request.title%"
         operator: ===
         right: CI for Node
         else:
@@ -58,34 +57,34 @@ steps:
             data:
               title: CI for Node
         store:
-          ci_for_node_pr: '{{ payload.pull_request.number }}'
+          ci_for_node_pr: "{{ payload.pull_request.number }}"
       - type: respond
         with: 01_explain-template.md
         data:
-          actionsUrl: '%payload.repository.html_url%/actions'
+          actionsUrl: "%payload.repository.html_url%/actions"
       - type: createPullRequestComment
-        position: 3
-        file: .github/workflows/nodejs.yml
+        position: 6
+        file: .github/workflows/node.js.yml
         body: 01_explain-on.md
       - type: createPullRequestComment
-        position: 8
-        file: .github/workflows/nodejs.yml
+        position: 12
+        file: .github/workflows/node.js.yml
         body: 01_explain-job.md
       - type: createPullRequestComment
-        position: 17
-        file: .github/workflows/nodejs.yml
+        position: 21
+        file: .github/workflows/node.js.yml
         body: 01_explain-checkout.md
       - type: createPullRequestComment
-        position: 24
-        file: .github/workflows/nodejs.yml
+        position: 27
+        file: .github/workflows/node.js.yml
         body: 01_explain-run.md
       - type: createPullRequest
         title: Add jest tests
         body: 01_merge-jest.md
-        base: '%payload.pull_request.head.ref%'
+        base: "%payload.pull_request.head.ref%"
         head: add-jest
         store:
-          second_pr_url: '{{ result.data.html_url }}'
+          second_pr_url: "{{ result.data.html_url }}"
 
   # Step 2
   # 1. GitHub sends us a workflow run.
@@ -93,10 +92,10 @@ steps:
   - title: Run a templated workflow
     description: Wait for GitHub to run the templated workflow and report back the results
     event: check_suite.completed
-    link: '{{ store.second_pr_url }}'
+    link: "{{ store.second_pr_url }}"
     actions:
       - type: gate
-        left: '%payload.check_suite.app.slug%'
+        left: "%payload.check_suite.app.slug%"
         operator: ===
         right: github-actions
       - type: respond
@@ -107,26 +106,26 @@ steps:
         issue: CI for Node
         with: 02_template-workflow-ran.md
         data:
-          url: '%actions.jestPr.data.html_url%'
-          actionsUrl: '%payload.repository.html_url%/actions'
-        
+          url: "%actions.jestPr.data.html_url%"
+          actionsUrl: "%payload.repository.html_url%/actions"
+
   # Step 3
   # 1. Learner adds a `test` script to `package.json`. Workflow still fails because the tests themselves are missing.
-  # 1. Bot commits changes with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results. 
+  # 1. Bot commits changes with Jest files, explains testing framework, asks learner to fix the code based on the results of the tests. Explains how to read results.
   - title: Add your first test
     description: Add your first test script for CI to pick up
     event: pull_request.synchronize
-    link: '{{ store.second_pr_url }}'
+    link: "{{ store.second_pr_url }}"
     actions:
       - type: respond
         with: 03_wait-for-first-test.md
         data:
-          actionsUrl: '%payload.repository.html_url%/actions'
+          actionsUrl: "%payload.repository.html_url%/actions"
       - type: respond
         with: 0X_goto.md
         issue: Add jest tests
         data:
-          url: '%payload.pull_request.html_url%'
+          url: "%payload.pull_request.html_url%"
 
   # Step 4
   # 1. Learner reviews log in the Actions tab, fixes the code as suggested.
@@ -135,48 +134,48 @@ steps:
   - title: Read an Actions log
     description: Tell the bot which test is failing so we can fix it
     event: issue_comment.created
-    link: '{{ store.second_pr_url }}'
+    link: "{{ store.second_pr_url }}"
     actions:
       - type: gate
-        left: '/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gim'
+        left: "/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gim"
         operator: test
-        right: '%payload.comment.body%'
+        right: "%payload.comment.body%"
         required: false
         else:
           - type: respond
             with: e-test-name.md
       - type: getPullRequest
-        pullRequest: '{{ store.ci_for_node_pr }}'
+        pullRequest: "{{ store.ci_for_node_pr }}"
         action_id: ciPr
       - type: respond
         with: 04_read-failed-log.md
         data:
-          gameJSUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+          gameJSUrl: "%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/src/game.js?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%"
       - type: createPullRequestComment
         position: 5
         file: src/game.js
         body: 04_test-suggestion.md
-        pullRequest: '%actions.ciPr.data.number%'
+        pullRequest: "%actions.ciPr.data.number%"
       # - type: createPullRequestComment
       #   pullRequest: CI for Node
       #   position: 5
       #   file: src/game.js
       #   body: fix-bananas.md
-          
+
   # Step 5
   # 1. Learner fixes the code that broke the build
   # 1. Bot approves PR. Let's merge the PR
   - title: Fix the test
     description: Edit the file that's causing the test to fail
     event: check_suite.completed
-    link: '{{ store.second_pr_url }}'
+    link: "{{ store.second_pr_url }}"
     actions:
       - type: gate
-        left: '%payload.check_suite.app.slug%'
+        left: "%payload.check_suite.app.slug%"
         operator: ===
         right: github-actions
       - type: gate
-        left: '%payload.check_suite.conclusion%'
+        left: "%payload.check_suite.conclusion%"
         operator: ===
         right: success
         else:
@@ -189,8 +188,8 @@ steps:
 
                 - In the change you're making in `src/game.js`, make sure you're using the same amount of indentation as the surrounding lines
 
-                - Ensure you didn't edit any unexpected files. This PR should only contain changes to `src/game.js`, `.github/workflows/nodejs.yml`, and `__test__/game.test.js`.
-                
+                - Ensure you didn't edit any unexpected files. This PR should only contain changes to `src/game.js`, `.github/workflows/node.js.yml`, and `__test__/game.test.js`.
+
                 - If all fails, read the logs! They'll contain the most context-specific troubleshooting information. Click on "Details" in the merge box below, or go to the Actions tab directly.
       - type: createReview
         event: APPROVE
@@ -203,13 +202,13 @@ steps:
   - title: Share the workflow with the team
     description: Merge the pull request containing your first workflow so the entire team can use it
     event: pull_request.closed
-    link: '{{ store.second_pr_url }}'
+    link: "{{ store.second_pr_url }}"
     actions:
       - type: gate
         every: true
         gates:
-          - left: '%payload.pull_request.merged%'
-          - left: '%payload.pull_request.title%'
+          - left: "%payload.pull_request.merged%"
+          - left: "%payload.pull_request.title%"
             operator: ===
             right: CI for Node
       - type: createIssue
@@ -217,32 +216,32 @@ steps:
         body: 06_custom-workflow.md
         action_id: newIssue
         data:
-          workflowUrl: '%payload.repository.html_url%/edit/master/.github/workflows/nodejs.yml'
+          workflowUrl: "%payload.repository.html_url%/edit/master/.github/workflows/nodejs.yml"
         store:
-          workflow_issue_url: '{{ result.data.html_url }}'
+          workflow_issue_url: "{{ result.data.html_url }}"
       - type: respond
         with: 0X_goto.md
         data:
-          url: '%actions.newIssue.data.html_url%'
+          url: "%actions.newIssue.data.html_url%"
 
   # Step 7
-  # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L10).
+  # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/node.js.yml#L10).
   # 1. Bot asks learner to add a build for Windows
   - title: Create a custom GitHub Actions workflow
     description: Edit the existing workflow with new build targets
     event: pull_request
-    link: '{{ store.workflow_issue_url }}'
+    link: "{{ store.workflow_issue_url }}"
     actions:
       - type: gate
         gates:
-        - left: '%payload.action%'
-          operator: ===
-          right: opened
-        - left: '%payload.action%'
-          operator: ===
-          right: edited
+          - left: "%payload.action%"
+            operator: ===
+            right: opened
+          - left: "%payload.action%"
+            operator: ===
+            right: edited
       - type: gate
-        left: '%payload.pull_request.title%'
+        left: "%payload.pull_request.title%"
         operator: ===
         right: Improve CI
         else:
@@ -251,7 +250,7 @@ steps:
             data:
               title: Improve CI
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -264,23 +263,23 @@ steps:
         with: 07_explain-build-matrix.md
       - type: createPullRequestComment
         position: 5
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/node.js.yml
         body: 07_add-windows.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
         store:
-          node_version_pr: '{{ payload.pull_request.html_url }}'
+          node_version_pr: "{{ payload.pull_request.html_url }}"
 
   # Step 8
-  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/nodejs.yml#L9)
+  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/node.js.yml#L9)
   # 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
   - title: Target a Windows environment
     description: Edit your workflow file to build for Windows environments
     event: pull_request.synchronize
-    link: '{{ store.node_version_pr }}'
+    link: "{{ store.node_version_pr }}"
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -292,17 +291,17 @@ steps:
       - type: respond
         with: 08_new-job.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/node.js.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
 
   # Step 9
   # 1. Learner creates a new job, moves `npm test` down to that job
   - title: Use multiple jobs
     description: Edit your workflow file to separate build and test jobs
     event: pull_request.synchronize
-    link: '{{ store.node_version_pr }}'
+    link: "{{ store.node_version_pr }}"
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -314,7 +313,7 @@ steps:
       - type: respond
         with: 09_wait-for-test.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/node.js.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
 
   # Step 10
   # 1. GitHub sends a failed `check_run` (we don't have build artifacts in the second job)
@@ -322,10 +321,10 @@ steps:
   - title: Run multiple jobs
     description: Wait for the result of multiple jobs in your workflow
     event: check_suite.completed
-    link: '{{ store.node_version_pr }}'
+    link: "{{ store.node_version_pr }}"
     actions:
       - type: gate
-        left: '%payload.check_suite.app.slug%'
+        left: "%payload.check_suite.app.slug%"
         operator: ===
         right: github-actions
       - type: getPullRequest
@@ -335,12 +334,12 @@ steps:
         issue: Improve CI
         with: 10_use-upload.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%'
+          fileUrl: "%payload.repository.html_url%/edit/%actions.ciPr.data.head.ref%/.github/workflows/node.js.yml?pr=/%payload.repository.full_name%/pull/%actions.ciPr.data.number%"
       - type: createPullRequestComment
         position: 15
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/node.js.yml
         body: 10_upload-suggestion.md
-        pullRequest: '%actions.ciPr.data.number%'
+        pullRequest: "%actions.ciPr.data.number%"
 
   # Step 11
   # 1. Learner uses the [`actions/upload-artifacts`](https://github.com/actions/upload-artifact) in the build job
@@ -348,10 +347,10 @@ steps:
   - title: Upload a job's build artifacts
     description: Use the upload action in your workflow file to save a job's build artifacts
     event: pull_request.synchronize
-    link: '{{ store.node_version_pr }}'
+    link: "{{ store.node_version_pr }}"
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -363,26 +362,25 @@ steps:
       - type: respond
         with: 11_use-download.md
         data:
-          fileUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/nodejs.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          fileUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/node.js.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
       - type: createPullRequestComment
         position: 17
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/node.js.yml
         body: 11_needs-suggestion.md
       - type: createPullRequestComment
         position: 31
-        file: .github/workflows/nodejs.yml
+        file: .github/workflows/node.js.yml
         body: 11_download-suggestion.md
-
 
   # Step 12
   # 1. Learner commits [`actions/download-artifacts`](https://github.com/actions/download-artifact) to the test job
   - title: Download a job's build artifacts
     description: Use the download action in your workflow file to access a prior job's build artifacts
     event: pull_request.synchronize
-    link: '{{ store.node_version_pr }}'
+    link: "{{ store.node_version_pr }}"
     actions:
       # - type: findInTree
-      #   path: .github/workflows/nodejs.yml
+      #   path: .github/workflows/node.js.yml
       #   action_id: nodeAction
       # - type: gate
       #   left: '%actions.nodeAction%'
@@ -398,14 +396,14 @@ steps:
   # Step 13
   - title: Share the improved CI workflow with the team
     description: Merge the pull request with the improved workflow
-    link: '{{ store.node_version_pr }}'
+    link: "{{ store.node_version_pr }}"
     event: pull_request.closed
     actions:
       - type: gate
         every: true
         gates:
-          - left: '%payload.pull_request.merged%'
-          - left: '%payload.pull_request.title%'
+          - left: "%payload.pull_request.merged%"
+          - left: "%payload.pull_request.title%"
             operator: ===
             right: Improve CI
       - type: mergeBranch
@@ -417,27 +415,27 @@ steps:
         head: team-workflow
         action_id: newPR
         data:
-          workflowIssue: '{{ store.workflow_issue_url }}'
-          fileUrl: '%payload.repository.html_url%/new/team-workflow/?filename=.github/workflows/approval-workflow.yml'
+          workflowIssue: "{{ store.workflow_issue_url }}"
+          fileUrl: "%payload.repository.html_url%/new/team-workflow/?filename=.github/workflows/approval-workflow.yml"
         store:
-          workflow_pr_url: '{{ result.data.html_url }}'
+          workflow_pr_url: "{{ result.data.html_url }}"
       - type: respond
         with: 0X_goto.md
         data:
-          url: '%actions.newPR.data.html_url%'
+          url: "%actions.newPR.data.html_url%"
 
   # Step 14
   # 1. GitHub sends a successful `check_run`
-  # 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation. 
+  # 1. Bot says we're now going to automate review approvals, asks learner to create a new workflow in the PR now and to add a blank step to the workflow for approval automation.
   # 1. Learner commits a new, mostly blank, workflow file, chooses a name for the workflow
   # 1. Bot asks the learner to choose an event, explains how those events trigger the workflow
   - title: Automate the review process
     description: Add a new workflow file to automate the team's review process
-    link: '{{ store.workflow_pr_url }}'
+    link: "{{ store.workflow_pr_url }}"
     event: pull_request.synchronize
     actions:
       - type: gate
-        left: '%payload.pull_request.title%'
+        left: "%payload.pull_request.title%"
         operator: ===
         right: A custom workflow
       - type: respond
@@ -447,19 +445,18 @@ steps:
         file: .github/workflows/approval-workflow.yml
         body: 14_event-suggestion.md
         data:
-          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
-
+          editUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
 
   # Step 15
   # 1. Learner adds the `pull_request_review` event to the workflow file.
   # 1. Bot asks learner to add a job with their own title, explains what that does
   - title: Use an action to automate pull request reviews
     description: Use the community action in your new workflow
-    link: '{{ store.workflow_pr_url }}'
+    link: "{{ store.workflow_pr_url }}"
     event: pull_request.synchronize
     actions:
       - type: gate
-        left: '%payload.pull_request.title%'
+        left: "%payload.pull_request.title%"
         operator: ===
         right: A custom workflow
       - type: respond
@@ -469,25 +466,24 @@ steps:
         file: .github/workflows/approval-workflow.yml
         body: 15_add-job-suggestion.md
         data:
-          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+          editUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
 
   # Step 16
   # 1. Learner adds a job
   # 1. Bot asks learner to choose a virtual environment, bot explains environment options and why we'd like to pick a specific one
   - title: Create an approval job in your new workflow
     description: In your new workflow file, create a new job that'll use the community action
-    link: '{{ store.workflow_pr_url }}'
+    link: "{{ store.workflow_pr_url }}"
     event: pull_request.synchronize
     actions:
       - type: gate
-        left: '%payload.pull_request.title%'
+        left: "%payload.pull_request.title%"
         operator: ===
         right: A custom workflow
       - type: respond
         with: 16_add-step.md
         data:
-          editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
-
+          editUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
 
   # Step 17
   # 1. Learner commits the `runs-on` and chooses an environment
@@ -496,34 +492,34 @@ steps:
   # 1. Bot points out that branch protections aren't currently in place, asks learner to set branch protections, and approve the PR
   - title: Automate approvals
     description: Use the community action to automate part of the review approval process
-    link: '{{ store.workflow_pr_url }}'
-    event: 
+    link: "{{ store.workflow_pr_url }}"
+    event:
       - pull_request.synchronize
       - issue_comment.created
     actions:
       - type: gate
-        left: '%payload.pull_request.title%'
+        left: "%payload.pull_request.title%"
         operator: ===
         right: A custom workflow
         else:
           - type: gate
-            left: '/hint/gi'
+            left: "/hint/gi"
             operator: test
-            right: '%payload.comment.body%'
+            right: "%payload.comment.body%"
           - type: createPullRequestComment
             position: 5
             file: .github/workflows/approval-workflow.yml
             body: 17_add-step-suggestion.md
-            pullRequest: '%payload.issue.number%'
+            pullRequest: "%payload.issue.number%"
             data:
-              editUrl: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%'
+              editUrl: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/approval-workflow.yml?pr=/%payload.repository.full_name%/pull/%payload.number%"
       - type: removeBranchProtection
       - type: requestReviewFromRegistrant
       - type: respond
         with: 17_protect-master.md
         data:
-          settingsUrl: '%payload.repository.html_url%/settings'
-          approvalUrl: '%payload.pull_request.html_url%/files#submit-review'
+          settingsUrl: "%payload.repository.html_url%/settings"
+          approvalUrl: "%payload.pull_request.html_url%/files#submit-review"
 
   # Step 18
   # 1. Learner sets branch protection and approves the PR
@@ -534,31 +530,31 @@ steps:
   # 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
   - title: Use branch protections
     description: Complete the automated review process by protecting the master branch
-    link: '{{ store.workflow_pr_url }}'
-    event: 
+    link: "{{ store.workflow_pr_url }}"
+    event:
       - pull_request_review.submitted
       - pull_request.labeled
     actions:
       - type: gate
         every: true
         gates:
-        - left: '%payload.review.state%'
-          operator: ===
-          right: approved
-        - left: '%payload.pull_request.title%'
-          operator: ===
-          right: A custom workflow
+          - left: "%payload.review.state%"
+            operator: ===
+            right: approved
+          - left: "%payload.pull_request.title%"
+            operator: ===
+            right: A custom workflow
       - type: octokit
         method: repos.getBranch
-        owner: '%payload.repository.owner.login%'
-        repo: '%payload.repository.name%'
+        owner: "%payload.repository.owner.login%"
+        repo: "%payload.repository.name%"
         branch: master
         action_id: branchProtection
       - type: gate
-        left: '%actions.branchProtection.data.protected%'
+        left: "%actions.branchProtection.data.protected%"
         else:
-        - type: respond
-          with: e-protect.md
+          - type: respond
+            with: e-protect.md
       - type: createIssue
         title: Congratulations!
         body: 18_congratulations.md
@@ -569,4 +565,4 @@ steps:
       - type: respond
         with: 0X_goto.md
         data:
-          url: '%actions.finalIssue.data.html_url%'
+          url: "%actions.finalIssue.data.html_url%"
