@@ -13,9 +13,7 @@ Let's see if you can use this action on your own.
 
 **If you'd like a hint, submit a comment on this pull request with the word "hint".**
 
-<br/>
-
-Here's some tips to get you going:
+### Here's some tips to get you going:
 - the workflow file needs a `steps:` block
 - give your new step any name you wish
 - to use a community action, use the `uses:` keyword
