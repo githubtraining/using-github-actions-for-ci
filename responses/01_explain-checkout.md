@@ -2,7 +2,7 @@
 
 #### Workflows, steps, actions, and jobs
 
-![workflow](https://user-images.githubusercontent.com/6351798/88589835-f5ce0900-d016-11ea-8c8a-0e7d7907c713.png)
+![An illustration split in two. On the left: illustration of how GitHub Actions terms are encapsulated. At the highest level: workflows and event triggers. Inside of workflows: jobs and definition of the build environment. Inside jobs: steps. Inside steps: a call to an action. On the right: the sequence: workflows, job, step, action.](https://user-images.githubusercontent.com/6351798/88589835-f5ce0900-d016-11ea-8c8a-0e7d7907c713.png)
 
 Let's dig into the vocabulary of GitHub Actions.
 

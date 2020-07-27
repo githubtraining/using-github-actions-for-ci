@@ -8,7 +8,7 @@ So what do we do when we need the work product of one job in another? We can use
 
 ## Step 11: Upload a job's build artifacts
 
-<img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592731-b2c26480-d01b-11ea-850e-c87588aadf4f.png">
+<img alt="icon of a binary file" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592731-b2c26480-d01b-11ea-850e-c87588aadf4f.png">
 
 Artifacts allow you to persist data after a job has completed, and share that data with another job in the same workflow. An artifact is a file or collection of files produced during a workflow run.
 

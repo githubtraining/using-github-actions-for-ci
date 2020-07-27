@@ -6,7 +6,7 @@ Great! The build artifacts will now be uploaded to the artifact storage. If you 
 
 ## Step 12: Download a job's build artifacts
 
-<img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592731-b2c26480-d01b-11ea-850e-c87588aadf4f.png">
+<img alt="icon of a binary file" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592731-b2c26480-d01b-11ea-850e-c87588aadf4f.png">
 
 To remedy this, we'll run `test` only after `build` is finished so the artifacts are available. 
 

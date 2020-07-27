@@ -7,7 +7,7 @@ It's now time to use a community-created action. The action we'll use is [pullre
 
 ## Step 17: Automate approvals
 
-<img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88593701-2fa20e00-d01d-11ea-85df-d620868a5f0d.png">
+<img alt="icon of a review approval" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88593701-2fa20e00-d01d-11ea-85df-d620868a5f0d.png">
 
 Let's see if you can use this action on your own. 
 

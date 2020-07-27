@@ -7,7 +7,7 @@ Our custom workflow now accounts for:
 
 ## Step 9: Use multiple jobs
 
-<img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592093-aab5f500-d01a-11ea-8631-b2200684e7e0.png">
+<img alt="icon of gears indicating relatiopnship between multiple jobs" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592093-aab5f500-d01a-11ea-8631-b2200684e7e0.png">
 
 Let's now try to create a dedicated test job and satisfy the second item in our custom workflow checklist. 
 

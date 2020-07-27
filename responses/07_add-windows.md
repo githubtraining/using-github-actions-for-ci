@@ -5,7 +5,7 @@ Since we'd like to support deploying our app to Windows environments, let's add 
 
 ### :keyboard: Activity: Edit your workflow file to build for Windows environments
 
-<img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88591917-5ca0f180-d01a-11ea-8ed2-219aa3392cf2.png">
+<img alt="an icon of three gears" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88591917-5ca0f180-d01a-11ea-8ed2-219aa3392cf2.png">
 
 You can follow the suggestion, or manually make the changes in the numbered instructions.
 

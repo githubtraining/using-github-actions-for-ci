@@ -15,7 +15,7 @@ Take a look at the merge box, you'll notice you can merge this even though the r
 
 ## Step 18: Use branch protections
 
-<img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88594106-ddadb800-d01d-11ea-9ec9-fca55c0c69e2.png">
+<img alt="icon of a security shield indicating branch protections" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88594106-ddadb800-d01d-11ea-9ec9-fca55c0c69e2.png">
 
 Protected branches ensure that collaborators on your repository cannot make irrevocable changes to branches. Enabling protected branches also allows you to enable other optional checks and requirements, like required status checks and required reviews.
 
