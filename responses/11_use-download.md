@@ -8,7 +8,9 @@ Great! The build artifacts will now be uploaded to the artifact storage. If you 
 
 <img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592731-b2c26480-d01b-11ea-850e-c87588aadf4f.png">
 
-To remedy this, we'll run `test` only after `build` is finished so the artifacts are available. Similar to the upload action to send artifacts to the storage, we'll use another action built by GitHub to download these previously uploaded artifacts from the `build` job: [`actions/download-artifact`](https://github.com/actions/download-artifact).
+To remedy this, we'll run `test` only after `build` is finished so the artifacts are available. 
+
+Similar to the upload action to send artifacts to the storage, we'll use another action built by GitHub to download these previously uploaded artifacts from the `build` job: [`actions/download-artifact`](https://github.com/actions/download-artifact).
 
 ### :keyboard: Activity: Use the download action in your workflow file to access a prior job's build artifacts
 
