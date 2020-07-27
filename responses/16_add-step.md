@@ -12,6 +12,7 @@ It's now time to use a community-created action. The action we'll use is [pullre
 Let's see if you can use this action on your own. 
 
 **If you'd like a hint, submit a comment on this pull request with the word "hint".**
+<br/><br/>
 
 ### Here's some tips to get you going:
 - the workflow file needs a `steps:` block
