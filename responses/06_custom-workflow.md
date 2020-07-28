@@ -7,7 +7,7 @@ Our fictional team has a custom workflow that goes beyond the template we've use
 <img alt="an icon of three gears" align="left" width="50" height="50" src="https://user-images.githubusercontent.com/6351798/88609410-48241f80-d041-11ea-85ad-b77a5d08bfd1.png"><br/>
 **Test against multiple targets** so that we know if our supported operating systems and Node.js versions are working
 
-<img alt="icon of gears indicating relatiopnship between multiple jobs" align="left" width="50" height="50" src="https://user-images.githubusercontent.com/6351798/88609439-55410e80-d041-11ea-8186-09b2008e2572.png"><br/>
+<img alt="icon of gears indicating relationship between multiple jobs" align="left" width="50" height="50" src="https://user-images.githubusercontent.com/6351798/88609439-55410e80-d041-11ea-8186-09b2008e2572.png"><br/>
 **Dedicated test job** so that we can separate out build from test details
 
 <img alt="icon of a binary file" align="left" width="50" height="50" src="https://user-images.githubusercontent.com/6351798/88609455-5ffba380-d041-11ea-9e29-c2bac7a8dfd4.png"><br/>
@@ -29,7 +29,7 @@ Can GitHub Actions support this workflow? Let's find out. We'll tackle some of t
 ### :keyboard: Activity: Edit the existing workflow with new build targets
 
 1. Edit your [existing workflow]({{ workflowUrl }}) file in a new branch
-2. In that file, target versions `8.x` and `10.x` of Node, only
+2. In that file, target versions `12.x` and `14.x` of Node, only
 3. Open a new pull request titled **Improve CI** for your change.
 
 I'll respond when you open the pull request.
