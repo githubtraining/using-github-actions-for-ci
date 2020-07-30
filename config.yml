@@ -21,7 +21,7 @@ before:
     store:
       first_issue_url: "{{ result.data.html_url }}"
 
-# Repository artifacts
+# Repository artifacts:
 # 1. Issue: There's a bug!
 # 2. PR: CI for Node (learner)
 # 3. PR: Add jest tests (bot)

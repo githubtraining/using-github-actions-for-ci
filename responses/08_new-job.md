@@ -7,7 +7,11 @@ Our custom workflow now accounts for:
 
 ## Step 9: Use multiple jobs
 
-Let's now try to create a dedicated test job. This will allow us to separate the build and test functions of our workflow.
+<img alt="icon of gears indicating relationship between multiple jobs" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88592093-aab5f500-d01a-11ea-8631-b2200684e7e0.png">
+
+Let's now try to create a dedicated test job and satisfy the second item in our custom workflow checklist. 
+
+This will allow us to separate the build and test functions of our workflow into more than one job that will run when our workflow is triggered.
 
 ### Activity: Edit your workflow file to separate build and test jobs
 
@@ -42,7 +46,7 @@ Let's now try to create a dedicated test job. This will allow us to separate the
       strategy:
         matrix:
           os: [ubuntu-latest, windows-2016]
-          node-version: [8.x, 10.x]
+          node-version: [12.x, 14.x]
       steps:
       - uses: actions/checkout@v2
       - name: Use Node.js {% raw %}${{ matrix.node-version }}{% endraw %}
@@ -83,7 +87,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-2016]
-        node-version: [8.x, 10.x]
+        node-version: [12.x, 14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -106,7 +110,7 @@ When you commit to this branch, the workflow should run again. I'll respond when
 
 <details><summary>Actions workflow not running? Click here</summary>
 
-When a GitHub Actions workflow is running, you should see some checks in progress, like the screenshot below. 
+When a GitHub Actions workflow is running, you should see some checks in progress, like the screenshot below.
 
 ![checks in progress in a merge box](https://user-images.githubusercontent.com/16547949/66080348-ecc5f580-e533-11e9-909e-c213b08790eb.png)
 

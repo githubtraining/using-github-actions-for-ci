@@ -7,9 +7,14 @@ It's now time to use a community-created action. The action we'll use is [pullre
 
 ## Step 17: Automate approvals
 
-Let's see if you can use this action on your own. **If you'd like a hint, submit a comment on this pull request with the word "hint".**
+<img alt="icon of a review approval" align="left" width="100" height="100" src="https://user-images.githubusercontent.com/6351798/88593701-2fa20e00-d01d-11ea-85df-d620868a5f0d.png">
 
-Here's some tips to get you going:
+Let's see if you can use this action on your own. 
+
+**If you'd like a hint, submit a comment on this pull request with the word "hint".**
+<br/><br/>
+
+### Here's some tips to get you going:
 - the workflow file needs a `steps:` block
 - give your new step any name you wish
 - to use a community action, use the `uses:` keyword
