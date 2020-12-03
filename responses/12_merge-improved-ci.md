@@ -16,7 +16,7 @@ Our custom workflow now accounts for:
 ----
 
 In the next few steps, we'll finish supporting our team's workflow:
-- **branch protections** so that the `master` branch can't be deleted or inadvertently broken
+- **branch protections** so that the `main` branch can't be deleted or inadvertently broken
 - **required reviews** so that any pull requests are double checked by teammates
 - **obvious approvals** so we can merge quickly and potentially automate merges and deployments
 
