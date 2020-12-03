@@ -32,7 +32,7 @@ _You can follow the manual steps below, or accept the suggestions in the followi
         ...
         steps:
         - uses: actions/checkout@v2
-        - uses: actions/download-artifact@master
+        - uses: actions/download-artifact@main
           with: 
             name: webpack artifacts
             path: public
