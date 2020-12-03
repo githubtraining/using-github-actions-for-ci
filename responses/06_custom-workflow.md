@@ -14,7 +14,7 @@ Our fictional team has a custom workflow that goes beyond the template we've use
 **Access to build artifacts** so that we can deploy them to a target environment
 
 <img alt="icon of a security shield indicating branch protections" align="left" width="50" height="50" src="https://user-images.githubusercontent.com/6351798/88609465-6a1da200-d041-11ea-9c4c-55ffe90a3e72.png"><br/>
-**Branch protections** so that the `master` branch can't be deleted or inadvertently broken
+**Branch protections** so that the `main` branch can't be deleted or inadvertently broken
 
 <img alt="icon of a review approval" align="left" width="50" height="50" src="https://user-images.githubusercontent.com/6351798/88609558-9df8c780-d041-11ea-906f-dd23efd9f65c.png"><br/>
 **Required reviews** so that any pull requests are double checked by teammates

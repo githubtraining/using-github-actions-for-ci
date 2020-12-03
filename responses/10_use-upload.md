@@ -29,7 +29,7 @@ _You can follow the manual steps below, or accept the suggestion in the followin
             run: |
               npm install
               npm run build
-          - uses: actions/upload-artifact@master
+          - uses: actions/upload-artifact@main
             with:
               name: webpack artifacts
               path: public/

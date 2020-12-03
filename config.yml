@@ -10,7 +10,7 @@ template:
   repo: using-github-actions-for-ci-template
   name: github-actions-for-ci
 before:
-  # 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects master branch
+  # 1. Bot creates [Tic tac toe game](https://github.com/githubtraining/actions-template) for the learner, protects main branch
   # 1. Bot opens a bug report explaining the app is broken, asks learner to figure out what's wrong by adding some testing.
   - type: updateBranchProtection
   - type: createIssue
@@ -32,7 +32,7 @@ before:
 
 steps:
   # Step 1
-  # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/master/ci/node.js.yml)
+  # 1. Learner opens a PR with a new workflow by using the [templated workflow for Node](https://github.com/actions/starter-workflows/blob/main/ci/node.js.yml)
   # 1. Bot leaves line-specific comments explaining the pieces that were just added from the templated workflow.
   - title: Use a templated workflow
     description: Create a pull request with a templated workflow
@@ -88,7 +88,7 @@ steps:
 
   # Step 2
   # 1. GitHub sends us a workflow run.
-  # 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/master/package.json#L10))
+  # 1. Bot explains what is happening, and why the page build failed (we don't have a [test script](https://github.com/githubtraining/actions-template/blob/main/package.json#L10))
   - title: Run a templated workflow
     description: Wait for GitHub to run the templated workflow and report back the results
     event: check_suite.completed
@@ -216,7 +216,7 @@ steps:
         body: 06_custom-workflow.md
         action_id: newIssue
         data:
-          workflowUrl: "%payload.repository.html_url%/edit/master/.github/workflows/node.js.yml"
+          workflowUrl: "%payload.repository.html_url%/edit/main/.github/workflows/node.js.yml"
         store:
           workflow_issue_url: "{{ result.data.html_url }}"
       - type: respond
@@ -225,7 +225,7 @@ steps:
           url: "%actions.newIssue.data.html_url%"
 
   # Step 7
-  # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/node.js.yml#L10).
+  # 1. Learner edits the first workflow changing from templated [Node v8,10,12 to just v8,10](https://github.com/githubtraining/actions-template/blob/main/.github/workflows/node.js.yml#L10).
   # 1. Bot asks learner to add a build for Windows
   - title: Create a custom GitHub Actions workflow
     description: Edit the existing workflow with new build targets
@@ -271,7 +271,7 @@ steps:
           node_version_pr: "{{ payload.pull_request.html_url }}"
 
   # Step 8
-  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/master/.github/workflows/node.js.yml#L9)
+  # 1. Learner adds Windows to the [matrix os](https://github.com/githubtraining/actions-template/blob/main/.github/workflows/node.js.yml#L9)
   # 1. Bot asks learner to add a new job for testing, and separate out the test script into that new job.
   - title: Target a Windows environment
     description: Edit your workflow file to build for Windows environments
@@ -407,7 +407,7 @@ steps:
             operator: ===
             right: Improve CI
       - type: mergeBranch
-        head: master
+        head: main
         base: team-workflow
       - type: createPullRequest
         title: A custom workflow
@@ -516,7 +516,7 @@ steps:
       - type: removeBranchProtection
       - type: requestReviewFromRegistrant
       - type: respond
-        with: 17_protect-master.md
+        with: 17_protect-main.md
         data:
           settingsUrl: "%payload.repository.html_url%/settings"
           approvalUrl: "%payload.pull_request.html_url%/files#submit-review"
@@ -529,7 +529,7 @@ steps:
   # 1. Bot merges PR.
   # 1. Bot turns on pages build, drops link in the PR, explains to the learner the value on a workflow that enforces team behaviors.
   - title: Use branch protections
-    description: Complete the automated review process by protecting the master branch
+    description: Complete the automated review process by protecting the main branch
     link: "{{ store.workflow_pr_url }}"
     event:
       - pull_request_review.submitted
@@ -548,7 +548,7 @@ steps:
         method: repos.getBranch
         owner: "%payload.repository.owner.login%"
         repo: "%payload.repository.name%"
-        branch: master
+        branch: main
         action_id: branchProtection
       - type: gate
         left: "%actions.branchProtection.data.protected%"
