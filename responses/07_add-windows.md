@@ -14,7 +14,7 @@ You can follow the suggestion, or manually make the changes in the numbered inst
         node-version: [12.x, 14.x]
 ```
 
-1. Edit the workflow config at [`.github/workflows/nodejs.yml`]({{ fileUrl }})
+1. Edit the workflow config at [`.github/workflows/node.js.yml`]({{ fileUrl }})
 2. Add an `os` field to the `strategy.matrix` section of your workflow
 3. Add `ubuntu-latest` and `windows-2016` to the target operating systems
 4. Commit your workflow changes to this branch.
