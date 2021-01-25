@@ -6,7 +6,7 @@
         runs-on: ubuntu-latest
         steps:
         - name: Label when approved
-          uses: pullreminders/label-when-approved-action@main
+          uses: pullreminders/label-when-approved-action@master
           env:
             APPROVALS: "1"
             GITHUB_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
