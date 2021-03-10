@@ -21,14 +21,14 @@ _You can follow the manual steps below, or accept the suggestions in the followi
     ```yaml
       test:
         needs: build
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         ...
     ```
 1. Add a step to your `test` job that uses the `download-artifacts` action.
     ```yaml
       test:
         needs: build
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         ...
         steps:
         - uses: actions/checkout@v2
