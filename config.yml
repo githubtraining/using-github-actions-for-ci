@@ -137,7 +137,7 @@ steps:
     link: "{{ store.second_pr_url }}"
     actions:
       - type: gate
-        left: "/(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gim"
+        left: "/(Contains the compiled JavaScript)|(Initializes with two players)|(Starts the game with a random player)|(Sets the current player to be whoever it is not)/gim"
         operator: test
         right: "%payload.comment.body%"
         required: false
