@@ -42,7 +42,7 @@ This will allow us to separate the build and test functions of our workflow into
 4. In the newly created `test` job, include the following portions of your existing workflow:
     ```yaml
     test:
-      runs-on: ubuntu-latest
+      runs-on: ${{ matrix.os }}
       strategy:
         matrix:
           os: [ubuntu-latest, windows-2016]
